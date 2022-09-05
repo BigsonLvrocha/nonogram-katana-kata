@@ -1,0 +1,9 @@
+{
+  "verbose": true,
+  "ignore": [".git", "node_modules/**/node_modules", "**/tests/**", "**/tsconfig.tsbuildinfo", "**/*.map"],
+  "watch": ["dist/**/*.js"],
+  "env": {
+    "NODE_OPTIONS": "--experimental-specifier-resolution=node"
+  },
+  "ext": "js"
+}

@@ -1,3 +1,3 @@
 export function sayHi(): string {
-  return 'hi';
+  return 'eita, parece que deu certo :D';
 }
