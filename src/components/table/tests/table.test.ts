@@ -38,7 +38,7 @@ describe('table', () => {
       expect(table.state).toHaveLength(5);
       table.state.forEach((row) => {
         expect(row).toHaveLength(5);
-        row.map((val) => expect(val).toBe(CellState.EMPTY));
+        row.map((val) => expect(val).toBe(CellState.UNKNOWN));
       });
     });
   });

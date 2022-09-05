@@ -1,3 +1,5 @@
 export const enum CellState {
-  EMPTY = 0,
+  UNKNOWN = 0,
+  FILLED = 1,
+  EMPTY = 2,
 }

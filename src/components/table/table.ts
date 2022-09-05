@@ -8,7 +8,7 @@ export class Table {
     private readonly rowValues: number[][],
   ) {
     this.cells = Array.from({ length: rowValues.length }, () =>
-      Array.from({ length: columnValues.length }, () => CellState.EMPTY),
+      Array.from({ length: columnValues.length }, () => CellState.UNKNOWN),
     );
   }
 
