@@ -11,6 +11,12 @@
       "env": {
         "NODE_OPTIONS": "--experimental-specifier-resolution=node"
       }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test unit",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
     }
   ]
 }
