@@ -44,4 +44,23 @@ export class Table {
       throw new Error('Out of bounds');
     }
   }
+
+  public toString(): string {
+    return this.cells
+      .map((row) =>
+        row
+          .map((cell) => {
+            switch (cell) {
+              case CellState.EMPTY:
+                return 'X';
+              case CellState.FILLED:
+                return 'O';
+              default:
+                return '?';
+            }
+          })
+          .join(''),
+      )
+      .join('\n');
+  }
 }

@@ -85,6 +85,26 @@ describe('table', () => {
       expect(() => table.setCell(5, 0, CellState.FILLED)).toThrow();
       expect(() => table.setCell(0, 5, CellState.FILLED)).toThrow();
     });
+
+    it('prints the table', () => {
+      const rowValues = [[], [], [], [], []];
+      const collumnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, collumnValues);
+
+      table
+        .setCell(0, 0, CellState.FILLED)
+        .setCell(1, 1, CellState.EMPTY)
+        .setCell(2, 2, CellState.FILLED)
+        .setCell(3, 3, CellState.EMPTY)
+        .setCell(4, 4, CellState.FILLED);
+      expect(table.toString()).toBe(
+        `O????
+?X???
+??O??
+???X?
+????O`,
+      );
+    });
   });
 
   describe('5x5 snake table', () => {
