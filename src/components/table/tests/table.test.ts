@@ -74,6 +74,17 @@ describe('table', () => {
       table.setCell(0, 0, CellState.FILLED);
       expect(table.state[0][0]).toBe(CellState.FILLED);
     });
+
+    it('throws error when setting out of bounds', () => {
+      const rowValues = [[], [], [], [], []];
+      const collumnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, collumnValues);
+
+      expect(() => table.setCell(-1, 0, CellState.FILLED)).toThrow();
+      expect(() => table.setCell(1.1, 0, CellState.FILLED)).toThrow();
+      expect(() => table.setCell(5, 0, CellState.FILLED)).toThrow();
+      expect(() => table.setCell(0, 5, CellState.FILLED)).toThrow();
+    });
   });
 
   describe('5x5 snake table', () => {
