@@ -10,6 +10,14 @@ export class Table {
     this.cells = Array.from({ length: rowValues.length }, () =>
       Array.from({ length: columnValues.length }, () => CellState.UNKNOWN),
     );
+    this.validateValues(rowValues);
+    columnValues.forEach((vals) =>
+      vals.forEach((val) => {
+        if (val < 0) {
+          throw new Error('Invalid value for table');
+        }
+      }),
+    );
   }
 
   public get length(): number {
@@ -22,5 +30,15 @@ export class Table {
 
   public get state(): CellState[][] {
     return this.cells.map((row) => row.slice());
+  }
+
+  private validateValues(values: number[][]): void {
+    values.forEach((vals) =>
+      vals.forEach((val) => {
+        if (val < 0) {
+          throw new Error('Invalid value for table');
+        }
+      }),
+    );
   }
 }

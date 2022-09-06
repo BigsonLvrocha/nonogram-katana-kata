@@ -3,11 +3,25 @@ import { CellState } from '../../../contants/cell-state-enum';
 import { Table } from '../table';
 
 describe('table', () => {
-  describe('empty table', () => {
+  describe('table creation', () => {
     it('creates an empty table', () => {
       const table = new Table([], []);
       expect(table.length).toBe(0);
       expect(table.width).toBe(0);
+    });
+
+    it('creates a 5x5 table', () => {
+      const rowValues = [[], [], [], [], []];
+      const collumnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, collumnValues);
+      expect(table.length).toBe(5);
+      expect(table.width).toBe(5);
+    });
+
+    it('throws error on negative values for row', () => {
+      const rowValues = [[-1], [], [], [], []];
+      const collumnValues = [[], [], [], [], []];
+      expect(() => new Table(rowValues, collumnValues)).toThrow();
     });
   });
 
