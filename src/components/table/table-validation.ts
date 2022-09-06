@@ -1,3 +1,16 @@
+export function validateRangeValues(
+  linesValues: number[][],
+  max: number,
+): void {
+  linesValues.forEach((lineValues) => {
+    const total =
+      lineValues.reduce((acc, curr) => acc + curr, 0) + lineValues.length - 1;
+    if (total > max) {
+      throw new Error('Too many values in the line');
+    }
+  });
+}
+
 export function validateNegativeValues(linesValues: number[][]): void {
   linesValues.forEach((lineValues) =>
     lineValues.forEach((value) => {
