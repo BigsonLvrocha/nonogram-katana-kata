@@ -33,16 +33,14 @@ export class Table {
   }
 
   public setCell(row: number, collumn: number, state: CellState): this {
-    this.checkBounds(row);
-    if (collumn >= this.columnValues.length) {
-      throw new Error('Out of bounds');
-    }
+    this.checkBounds(row, this.rowValues.length);
+    this.checkBounds(collumn, this.columnValues.length);
     this.cells[row][collumn] = state;
     return this;
   }
 
-  private checkBounds(row: number): void {
-    if (row >= this.rowValues.length) {
+  private checkBounds(index: number, lineSize: number): void {
+    if (index >= lineSize) {
       throw new Error('Out of bounds');
     }
   }
