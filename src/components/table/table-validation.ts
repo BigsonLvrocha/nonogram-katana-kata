@@ -8,10 +8,14 @@ export function validateRangeValues(
 }
 
 function validateRangeInLineValues(lineValues: number[], max: number): void {
-  const total =
-    lineValues.reduce((acc, curr) => acc + curr, 0) + lineValues.length - 1;
-  if (total > max) {
+  if (getTotalCells() > max) {
     throw new Error('Too many values in the line');
+  }
+
+  function getTotalCells(): number {
+    return (
+      lineValues.reduce((acc, curr) => acc + curr, 0) + lineValues.length - 1
+    );
   }
 }
 
