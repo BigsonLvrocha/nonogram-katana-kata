@@ -30,15 +30,27 @@ describe('table', () => {
       expect(() => new Table(rowValues, collumnValues)).toThrow();
     });
 
-    it('throws error on more values than possible in a row', () => {
+    it('throws error on values bigger than possible in a row', () => {
       const rowValues = [[6], [], [], [], []];
       const collumnValues = [[], [], [], [], []];
       expect(() => new Table(rowValues, collumnValues)).toThrow();
     });
 
-    it('throws error on more values than possible in a collumn', () => {
+    it('throws error on values bigger than possible in a collumn', () => {
       const rowValues = [[], [], [], [], []];
       const collumnValues = [[6], [], [], [], []];
+      expect(() => new Table(rowValues, collumnValues)).toThrow();
+    });
+
+    it('throws error on sum of values bigger than possible in a row', () => {
+      const rowValues = [[3, 2], [], [], [], []];
+      const collumnValues = [[], [], [], [], []];
+      expect(() => new Table(rowValues, collumnValues)).toThrow();
+    });
+
+    it('throws error on sum of values bigger than possible in a collumn', () => {
+      const rowValues = [[], [], [], [], []];
+      const collumnValues = [[3, 2], [], [], [], []];
       expect(() => new Table(rowValues, collumnValues)).toThrow();
     });
   });

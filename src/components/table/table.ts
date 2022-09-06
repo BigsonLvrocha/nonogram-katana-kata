@@ -28,23 +28,23 @@ export class Table {
     return this.cells.map((row) => row.slice());
   }
 
-  private validateNegativeValues(values: number[][]): void {
-    values.forEach((vals) =>
-      vals.forEach((val) => {
-        if (val < 0) {
+  private validateNegativeValues(linesValues: number[][]): void {
+    linesValues.forEach((lineValues) =>
+      lineValues.forEach((value) => {
+        if (value < 0 || !Number.isInteger(value)) {
           throw new Error('Invalid value for table');
         }
       }),
     );
   }
 
-  private validateRangeValues(values: number[][], max: number): void {
-    values.forEach((vals) =>
-      vals.forEach((val) => {
-        if (val > max) {
-          throw new Error('invalid value for max');
-        }
-      }),
-    );
+  private validateRangeValues(linesValues: number[][], max: number): void {
+    linesValues.forEach((lineValues) => {
+      const total =
+        lineValues.reduce((acc, curr) => acc + curr, 0) + lineValues.length - 1;
+      if (total > max) {
+        throw new Error('Too many values in the line');
+      }
+    });
   }
 }
