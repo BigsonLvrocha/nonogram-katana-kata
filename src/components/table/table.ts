@@ -1,4 +1,5 @@
 import { CellState } from '../../contants/cell-state-enum';
+import { validateNegativeValues } from './table-validation';
 
 export class Table {
   private readonly cells: CellState[][];
@@ -10,8 +11,8 @@ export class Table {
     this.cells = Array.from({ length: rowValues.length }, () =>
       Array.from({ length: columnValues.length }, () => CellState.UNKNOWN),
     );
-    this.validateNegativeValues(rowValues);
-    this.validateNegativeValues(columnValues);
+    validateNegativeValues(rowValues);
+    validateNegativeValues(columnValues);
     this.validateRangeValues(rowValues, columnValues.length);
     this.validateRangeValues(columnValues, rowValues.length);
   }
@@ -26,16 +27,6 @@ export class Table {
 
   public get state(): CellState[][] {
     return this.cells.map((row) => row.slice());
-  }
-
-  private validateNegativeValues(linesValues: number[][]): void {
-    linesValues.forEach((lineValues) =>
-      lineValues.forEach((value) => {
-        if (value < 0 || !Number.isInteger(value)) {
-          throw new Error('Invalid value for table');
-        }
-      }),
-    );
   }
 
   private validateRangeValues(linesValues: number[][], max: number): void {
