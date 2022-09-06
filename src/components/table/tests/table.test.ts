@@ -23,6 +23,24 @@ describe('table', () => {
       const collumnValues = [[], [], [], [], []];
       expect(() => new Table(rowValues, collumnValues)).toThrow();
     });
+
+    it('throws error on negative values for collumn', () => {
+      const rowValues = [[], [], [], [], []];
+      const collumnValues = [[-1], [], [], [], []];
+      expect(() => new Table(rowValues, collumnValues)).toThrow();
+    });
+
+    it('throws error on more values than possible in a row', () => {
+      const rowValues = [[6], [], [], [], []];
+      const collumnValues = [[], [], [], [], []];
+      expect(() => new Table(rowValues, collumnValues)).toThrow();
+    });
+
+    it('throws error on more values than possible in a collumn', () => {
+      const rowValues = [[], [], [], [], []];
+      const collumnValues = [[6], [], [], [], []];
+      expect(() => new Table(rowValues, collumnValues)).toThrow();
+    });
   });
 
   describe('5x5 snake table', () => {

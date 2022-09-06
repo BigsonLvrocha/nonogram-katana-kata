@@ -10,14 +10,10 @@ export class Table {
     this.cells = Array.from({ length: rowValues.length }, () =>
       Array.from({ length: columnValues.length }, () => CellState.UNKNOWN),
     );
-    this.validateValues(rowValues);
-    columnValues.forEach((vals) =>
-      vals.forEach((val) => {
-        if (val < 0) {
-          throw new Error('Invalid value for table');
-        }
-      }),
-    );
+    this.validateNegativeValues(rowValues);
+    this.validateNegativeValues(columnValues);
+    this.validateRangeValues(rowValues, columnValues.length);
+    this.validateRangeValues(columnValues, rowValues.length);
   }
 
   public get length(): number {
@@ -32,11 +28,21 @@ export class Table {
     return this.cells.map((row) => row.slice());
   }
 
-  private validateValues(values: number[][]): void {
+  private validateNegativeValues(values: number[][]): void {
     values.forEach((vals) =>
       vals.forEach((val) => {
         if (val < 0) {
           throw new Error('Invalid value for table');
+        }
+      }),
+    );
+  }
+
+  private validateRangeValues(values: number[][], max: number): void {
+    values.forEach((vals) =>
+      vals.forEach((val) => {
+        if (val > max) {
+          throw new Error('invalid value for max');
         }
       }),
     );
