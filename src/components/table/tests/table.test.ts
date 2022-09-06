@@ -30,6 +30,18 @@ describe('table', () => {
       expect(() => new Table(rowValues, collumnValues)).toThrow();
     });
 
+    it('throws error on fractional values for row', () => {
+      const rowValues = [[1.1], [], [], [], []];
+      const collumnValues = [[], [], [], [], []];
+      expect(() => new Table(rowValues, collumnValues)).toThrow();
+    });
+
+    it('throws error on fractional values for collumn', () => {
+      const rowValues = [[], [], [], [], []];
+      const collumnValues = [[1.1], [], [], [], []];
+      expect(() => new Table(rowValues, collumnValues)).toThrow();
+    });
+
     it('throws error on values bigger than possible in a row', () => {
       const rowValues = [[6], [], [], [], []];
       const collumnValues = [[], [], [], [], []];
