@@ -31,4 +31,9 @@ export class Table {
   public get state(): CellState[][] {
     return this.cells.map((row) => row.slice());
   }
+
+  public setCell(row: number, collumn: number, state: CellState): this {
+    this.cells[row][collumn] = state;
+    return this;
+  }
 }

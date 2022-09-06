@@ -65,6 +65,15 @@ describe('table', () => {
       const collumnValues = [[3, 2], [], [], [], []];
       expect(() => new Table(rowValues, collumnValues)).toThrow();
     });
+
+    it('sets a cell state', () => {
+      const rowValues = [[], [], [], [], []];
+      const collumnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, collumnValues);
+
+      table.setCell(0, 0, CellState.FILLED);
+      expect(table.state[0][0]).toBe(CellState.FILLED);
+    });
   });
 
   describe('5x5 snake table', () => {
