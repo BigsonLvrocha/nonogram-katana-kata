@@ -46,13 +46,17 @@ export class Table {
   }
 
   public toString(): string {
-    const header = `/${this.cells.map(() => '-').join('')}\\\n`;
+    const header = `/${getDashes(this.cells.length)}\\\n`;
     const middleRows = this.cells
       .map((row) => `|${getRowCharacters(row)}|\n`)
       .join('\n');
     const footer = `\\${this.cells.map(() => '-').join('')}/\n`;
     return `${header}${middleRows}${footer}`;
   }
+}
+
+function getDashes(number: number): string {
+  return Array.from({ length: number }, () => '-').join('');
 }
 
 function getRowCharacters(row: CellState[]): string {
