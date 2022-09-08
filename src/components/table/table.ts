@@ -47,7 +47,7 @@ export class Table {
 
   public toString(): string {
     return (
-      getColumnValuesPrint(this.columnValues) +
+      getColumnValuesLines(this.columnValues) +
       getHeader(this.columnValues.length) +
       getBody(this.cells) +
       getFooter(this.columnValues.length)
@@ -55,21 +55,28 @@ export class Table {
   }
 }
 
-function getColumnValuesPrint(columnValues: readonly number[][]): string {
-  const max = columnValues.reduce(
+function getColumnValuesLines(columnsValues: readonly number[][]): string {
+  const maxLines = columnsValues.reduce(
     (acc, curr) => (acc < curr.length ? curr.length : acc),
     0,
   );
-  return Array.from({ length: max }, (_, i) => i)
-    .map(
-      (line) =>
-        ` ${columnValues
-          .map((vals) => {
-            return getColumnValuesLineCharacter(vals, line, max);
-          })
-          .join('')} \n`,
+  return Array.from({ length: maxLines }, (_, i) => i)
+    .map((currentLine) =>
+      getColumnValuesLine(columnsValues, currentLine, maxLines),
     )
     .join('');
+}
+
+function getColumnValuesLine(
+  columnsValues: readonly number[][],
+  currentLine: number,
+  maxLines: number,
+): string {
+  return ` ${columnsValues
+    .map((columnValues) => {
+      return getColumnValuesLineCharacter(columnValues, currentLine, maxLines);
+    })
+    .join('')} \n`;
 }
 
 function getColumnValuesLineCharacter(
