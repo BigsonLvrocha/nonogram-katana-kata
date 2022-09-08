@@ -62,8 +62,7 @@ function getCollumnValuesPrint(collumnValues: readonly number[][]): string {
   );
   let result = '';
   for (let line = 0; line < max; line += 1) {
-    let lineStr = ' ';
-    lineStr += collumnValues
+    const lineStr = ` ${collumnValues
       .map((vals) => {
         const indexToPrint = line - (max - vals.length);
         if (indexToPrint < 0) {
@@ -71,8 +70,7 @@ function getCollumnValuesPrint(collumnValues: readonly number[][]): string {
         }
         return vals[indexToPrint].toString();
       })
-      .join('');
-    lineStr += ' \n';
+      .join('')} \n`;
     result += lineStr;
   }
   return result;
