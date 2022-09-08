@@ -67,6 +67,7 @@ function getCollumnValuesPrint(collumnValues: readonly number[][]): string {
       const indexToPrint = line - (max - vals.length);
       if (indexToPrint < 0) {
         lineStr += ' ';
+        return;
       }
       lineStr += vals[indexToPrint].toString();
     });

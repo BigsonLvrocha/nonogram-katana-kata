@@ -124,6 +124,25 @@ describe('table', () => {
           '\\-----/\n',
       );
     });
+
+    it('prints the table with multiple numbers in collumn', () => {
+      const rowValues = [[], [], [], [], []];
+      const collumnValues = [[1], [1, 2], [3], [1, 1, 1], [2]];
+      const table = new Table(rowValues, collumnValues);
+
+      expect(table.toString()).toBe(
+        '    1  \n' +
+          '  1 1  \n' +
+          ' 12312 \n' +
+          '/-----\\\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '\\-----/\n',
+      );
+    });
   });
 
   describe('5x5 snake table', () => {
