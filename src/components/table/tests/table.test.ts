@@ -108,27 +108,20 @@ describe('table', () => {
       );
     });
 
-    it.skip('prints the table with numbers in row', () => {
-      const rowValues = [[1], [2], [3], [1], [2]];
-      const collumnValues = [[], [], [], [], []];
+    it('prints the table with numbers in collumn', () => {
+      const rowValues = [[], [], [], [], []];
+      const collumnValues = [[1], [2], [3], [1], [2]];
       const table = new Table(rowValues, collumnValues);
 
-      table
-        .setCell(0, 0, CellState.FILLED)
-        .setCell(1, 1, CellState.EMPTY)
-        .setCell(2, 2, CellState.FILLED)
-        .setCell(3, 3, CellState.EMPTY)
-        .setCell(4, 4, CellState.FILLED);
       expect(table.toString()).toBe(
-        `
-12312
- -----
-|O????|
-|?X???|
-|??O??|
-|???X?|
-|????O|
- -----`,
+        ' 12312 \n' +
+          '/-----\\\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '\\-----/\n',
       );
     });
   });

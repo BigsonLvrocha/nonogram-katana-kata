@@ -8,8 +8,8 @@ export class Table {
   private readonly cells: CellState[][];
 
   constructor(
-    private readonly columnValues: number[][],
     private readonly rowValues: number[][],
+    private readonly columnValues: number[][],
   ) {
     this.cells = Array.from({ length: rowValues.length }, () =>
       Array.from({ length: columnValues.length }, () => CellState.UNKNOWN),
@@ -47,11 +47,33 @@ export class Table {
 
   public toString(): string {
     return (
+      getCollumnValuesPrint(this.columnValues) +
       getHeader(this.columnValues.length) +
       getBody(this.cells) +
       getFooter(this.columnValues.length)
     );
   }
+}
+
+function getCollumnValuesPrint(collumnValues: readonly number[][]): string {
+  const max = collumnValues.reduce(
+    (acc, curr) => (acc < curr.length ? curr.length : acc),
+    0,
+  );
+  let result = '';
+  for (let line = 0; line < max; line += 1) {
+    let lineStr = ' ';
+    collumnValues.forEach((vals) => {
+      const indexToPrint = line - (max - vals.length);
+      if (indexToPrint < 0) {
+        lineStr += ' ';
+      }
+      lineStr += vals[indexToPrint].toString();
+    });
+    lineStr += ' \n';
+    result += lineStr;
+  }
+  return result;
 }
 
 function getBody(cells: CellState[][]): string {
