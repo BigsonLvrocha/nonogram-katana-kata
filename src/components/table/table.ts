@@ -56,13 +56,13 @@ export class Table {
 }
 
 function getColumnValuesLines(columnsValues: readonly number[][]): string {
-  const maxLines = columnsValues.reduce(
+  const lineLength = columnsValues.reduce(
     (acc, curr) => (acc < curr.length ? curr.length : acc),
     0,
   );
-  return Array.from({ length: maxLines }, (_, i) => i)
+  return Array.from({ length: lineLength }, (_, i) => i)
     .map((currentLine) =>
-      getColumnValuesLine(columnsValues, currentLine, maxLines),
+      getColumnValuesLine(columnsValues, currentLine, lineLength),
     )
     .join('');
 }
@@ -70,11 +70,15 @@ function getColumnValuesLines(columnsValues: readonly number[][]): string {
 function getColumnValuesLine(
   columnsValues: readonly number[][],
   currentLine: number,
-  maxLines: number,
+  lineLength: number,
 ): string {
   return ` ${columnsValues
     .map((columnValues) => {
-      return getColumnValuesLineCharacter(columnValues, currentLine, maxLines);
+      return getColumnValuesLineCharacter(
+        columnValues,
+        currentLine,
+        lineLength,
+      );
     })
     .join('')} \n`;
 }
@@ -82,9 +86,9 @@ function getColumnValuesLine(
 function getColumnValuesLineCharacter(
   columnValues: readonly number[],
   currentLine: number,
-  maxLines: number,
+  lineLength: number,
 ): string {
-  const indexToPrint = currentLine - (maxLines - columnValues.length);
+  const indexToPrint = currentLine - (lineLength - columnValues.length);
   if (indexToPrint < 0) {
     return ' ';
   }
