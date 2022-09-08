@@ -56,15 +56,19 @@ export class Table {
 }
 
 function getColumnValuesLines(columnsValues: readonly number[][]): string {
-  const lineLength = columnsValues.reduce(
-    (acc, curr) => (acc < curr.length ? curr.length : acc),
-    0,
-  );
+  const lineLength = getColumnValuesLineLength(columnsValues);
   return Array.from({ length: lineLength }, (_, i) => i)
     .map((currentLine) =>
       getColumnValuesLine(columnsValues, currentLine, lineLength),
     )
     .join('');
+}
+
+function getColumnValuesLineLength(columnsValues: readonly number[][]): number {
+  return columnsValues.reduce(
+    (acc, curr) => (acc < curr.length ? curr.length : acc),
+    0,
+  );
 }
 
 function getColumnValuesLine(
