@@ -12,64 +12,64 @@ describe('table', () => {
 
     it('creates a 5x5 table', () => {
       const rowValues = [[], [], [], [], []];
-      const collumnValues = [[], [], [], [], []];
-      const table = new Table(rowValues, collumnValues);
+      const columnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, columnValues);
       expect(table.length).toBe(5);
       expect(table.width).toBe(5);
     });
 
     it('throws error on negative values for row', () => {
       const rowValues = [[-1], [], [], [], []];
-      const collumnValues = [[], [], [], [], []];
-      expect(() => new Table(rowValues, collumnValues)).toThrow();
+      const columnValues = [[], [], [], [], []];
+      expect(() => new Table(rowValues, columnValues)).toThrow();
     });
 
-    it('throws error on negative values for collumn', () => {
+    it('throws error on negative values for column', () => {
       const rowValues = [[], [], [], [], []];
-      const collumnValues = [[-1], [], [], [], []];
-      expect(() => new Table(rowValues, collumnValues)).toThrow();
+      const columnValues = [[-1], [], [], [], []];
+      expect(() => new Table(rowValues, columnValues)).toThrow();
     });
 
     it('throws error on fractional values for row', () => {
       const rowValues = [[1.1], [], [], [], []];
-      const collumnValues = [[], [], [], [], []];
-      expect(() => new Table(rowValues, collumnValues)).toThrow();
+      const columnValues = [[], [], [], [], []];
+      expect(() => new Table(rowValues, columnValues)).toThrow();
     });
 
-    it('throws error on fractional values for collumn', () => {
+    it('throws error on fractional values for column', () => {
       const rowValues = [[], [], [], [], []];
-      const collumnValues = [[1.1], [], [], [], []];
-      expect(() => new Table(rowValues, collumnValues)).toThrow();
+      const columnValues = [[1.1], [], [], [], []];
+      expect(() => new Table(rowValues, columnValues)).toThrow();
     });
 
     it('throws error on values bigger than possible in a row', () => {
       const rowValues = [[6], [], [], [], []];
-      const collumnValues = [[], [], [], [], []];
-      expect(() => new Table(rowValues, collumnValues)).toThrow();
+      const columnValues = [[], [], [], [], []];
+      expect(() => new Table(rowValues, columnValues)).toThrow();
     });
 
-    it('throws error on values bigger than possible in a collumn', () => {
+    it('throws error on values bigger than possible in a column', () => {
       const rowValues = [[], [], [], [], []];
-      const collumnValues = [[6], [], [], [], []];
-      expect(() => new Table(rowValues, collumnValues)).toThrow();
+      const columnValues = [[6], [], [], [], []];
+      expect(() => new Table(rowValues, columnValues)).toThrow();
     });
 
     it('throws error on sum of values bigger than possible in a row', () => {
       const rowValues = [[3, 2], [], [], [], []];
-      const collumnValues = [[], [], [], [], []];
-      expect(() => new Table(rowValues, collumnValues)).toThrow();
+      const columnValues = [[], [], [], [], []];
+      expect(() => new Table(rowValues, columnValues)).toThrow();
     });
 
-    it('throws error on sum of values bigger than possible in a collumn', () => {
+    it('throws error on sum of values bigger than possible in a column', () => {
       const rowValues = [[], [], [], [], []];
-      const collumnValues = [[3, 2], [], [], [], []];
-      expect(() => new Table(rowValues, collumnValues)).toThrow();
+      const columnValues = [[3, 2], [], [], [], []];
+      expect(() => new Table(rowValues, columnValues)).toThrow();
     });
 
     it('sets a cell state', () => {
       const rowValues = [[], [], [], [], []];
-      const collumnValues = [[], [], [], [], []];
-      const table = new Table(rowValues, collumnValues);
+      const columnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, columnValues);
 
       table.setCell(0, 0, CellState.FILLED);
       expect(table.state[0][0]).toBe(CellState.FILLED);
@@ -77,8 +77,8 @@ describe('table', () => {
 
     it('throws error when setting out of bounds', () => {
       const rowValues = [[], [], [], [], []];
-      const collumnValues = [[], [], [], [], []];
-      const table = new Table(rowValues, collumnValues);
+      const columnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, columnValues);
 
       expect(() => table.setCell(-1, 0, CellState.FILLED)).toThrow();
       expect(() => table.setCell(1.1, 0, CellState.FILLED)).toThrow();
@@ -88,8 +88,8 @@ describe('table', () => {
 
     it('prints the table', () => {
       const rowValues = [[], [], [], [], []];
-      const collumnValues = [[], [], [], [], []];
-      const table = new Table(rowValues, collumnValues);
+      const columnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, columnValues);
 
       table
         .setCell(0, 0, CellState.FILLED)
@@ -108,10 +108,10 @@ describe('table', () => {
       );
     });
 
-    it('prints the table with numbers in collumn', () => {
+    it('prints the table with numbers in column', () => {
       const rowValues = [[], [], [], [], []];
-      const collumnValues = [[1], [2], [3], [1], [2]];
-      const table = new Table(rowValues, collumnValues);
+      const columnValues = [[1], [2], [3], [1], [2]];
+      const table = new Table(rowValues, columnValues);
 
       expect(table.toString()).toBe(
         ' 12312 \n' +
@@ -125,10 +125,29 @@ describe('table', () => {
       );
     });
 
-    it('prints the table with multiple numbers in collumn', () => {
+    it.skip('prints the table with multiple numbers in column', () => {
       const rowValues = [[], [], [], [], []];
-      const collumnValues = [[1], [1, 2], [3], [1, 1, 1], [2]];
-      const table = new Table(rowValues, collumnValues);
+      const columnValues = [[1], [1, 2], [3], [1, 1, 1], [2]];
+      const table = new Table(rowValues, columnValues);
+
+      expect(table.toString()).toBe(
+        '    1  \n' +
+          '  1 1  \n' +
+          ' 12312 \n' +
+          '/-----\\\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '|?????|\n' +
+          '\\-----/\n',
+      );
+    });
+
+    it('prints the table with multiple numbers in rows', () => {
+      const columnValues = [[], [], [], [], []];
+      const rowValues = [[1], [1, 2], [3], [1, 1, 1], [2]];
+      const table = new Table(rowValues, columnValues);
 
       expect(table.toString()).toBe(
         '    1  \n' +
@@ -150,14 +169,14 @@ describe('table', () => {
 
     beforeEach(() => {
       const rowValues = [[5], [1], [5], [1], [5]];
-      const collumnValues = [
+      const columnValues = [
         [3, 1],
         [1, 1, 1],
         [1, 1, 1],
         [1, 1, 1],
         [1, 3],
       ];
-      table = new Table(rowValues, collumnValues);
+      table = new Table(rowValues, columnValues);
     });
 
     it('has 5 of length', () => {
