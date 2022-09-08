@@ -48,20 +48,20 @@ export class Table {
   public toString(): string {
     const header = `/${this.cells.map(() => '-').join('')}\\\n`;
     const middleRows = this.cells
-      .map((row) => `|${row.map(this.getCellCharacter).join('')}|`)
+      .map((row) => `|${row.map(getCellCharacter).join('')}|`)
       .join('\n');
     const footer = `\\${this.cells.map(() => '-').join('')}/\n`;
     return `${header}${middleRows}${footer}`;
   }
+}
 
-  private getCellCharacter(cell: CellState): string {
-    switch (cell) {
-      case CellState.EMPTY:
-        return 'X';
-      case CellState.FILLED:
-        return '*';
-      default:
-        return '?';
-    }
+function getCellCharacter(cell: CellState): string {
+  switch (cell) {
+    case CellState.EMPTY:
+      return 'X';
+    case CellState.FILLED:
+      return '*';
+    default:
+      return '?';
   }
 }
