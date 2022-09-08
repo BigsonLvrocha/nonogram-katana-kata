@@ -49,8 +49,8 @@ export class Table {
     const header = `/${getDashes(this.cells.length)}\\\n`;
     const middleRows = this.cells
       .map((row) => `|${getRowCharacters(row)}|\n`)
-      .join('\n');
-    const footer = `\\${this.cells.map(() => '-').join('')}/\n`;
+      .join('');
+    const footer = `\\${getDashes(this.cells.length)}/\n`;
     return `${header}${middleRows}${footer}`;
   }
 }
