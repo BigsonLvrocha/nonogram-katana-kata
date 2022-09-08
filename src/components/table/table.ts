@@ -46,42 +46,51 @@ export class Table {
   }
 
   public toString(): string {
+    const headerOffet = getMaxLength(this.rowValues);
     return (
-      getColumnValuesLines(this.columnValues) +
-      getHeader(this.columnValues.length) +
-      getBody(this.cells) +
+      getColumnValuesLines(this.columnValues, headerOffet) +
+      getHeader(this.columnValues.length, headerOffet) +
+      getBody(this.cells, this.rowValues) +
       getFooter(this.columnValues.length)
     );
   }
 }
 
-function getColumnValuesLines(columnsValues: readonly number[][]): string {
+function getColumnValuesLines(
+  columnsValues: readonly number[][],
+  offset: number,
+): string {
   const lineLength = getMaxLength(columnsValues);
   return Array.from({ length: lineLength }, (_, i) => i)
     .map((currentLine) =>
-      getColumnValuesLine(columnsValues, currentLine, lineLength),
+      getColumnValuesLine(columnsValues, currentLine, lineLength, offset),
     )
     .join('');
 }
 
-function getMaxLength(columnsValues: readonly number[][]): number {
-  return Math.max(...columnsValues.map((columnValues) => columnValues.length));
+function getMaxLength(linesValues: readonly number[][]): number {
+  return Math.max(...linesValues.map((lineValues) => lineValues.length));
 }
 
 function getColumnValuesLine(
   columnsValues: readonly number[][],
   currentLine: number,
   lineLength: number,
+  offset: number,
 ): string {
-  return ` ${columnsValues
-    .map((columnValues) => {
-      return getColumnValuesLineCharacter(
-        columnValues,
-        currentLine,
-        lineLength,
-      );
-    })
-    .join('')} \n`;
+  return (
+    ' '.repeat(offset + 1) +
+    columnsValues
+      .map((columnValues) => {
+        return getColumnValuesLineCharacter(
+          columnValues,
+          currentLine,
+          lineLength,
+        );
+      })
+      .join('') +
+    ' \n'
+  );
 }
 
 function getColumnValuesLineCharacter(
@@ -96,16 +105,39 @@ function getColumnValuesLineCharacter(
   return columnValues[indexToPrint].toString();
 }
 
-function getBody(cells: CellState[][]): string {
-  return cells.map(getBodyRow).join('');
+function getBody(
+  cells: CellState[][],
+  rowsValues: readonly number[][],
+): string {
+  const maxRowValueLength = getMaxLength(rowsValues);
+  return cells
+    .map((row, index) => getBodyRow(row, rowsValues[index], maxRowValueLength))
+    .join('');
 }
 
-function getBodyRow(row: CellState[]): string {
+function getBodyRow(
+  row: CellState[],
+  rowValues: number[],
+  maxRowValueLength: number,
+): string {
+  return (
+    getBodyRowValues(rowValues, maxRowValueLength) + getBodyCharacterLine(row)
+  );
+}
+
+function getBodyRowValues(
+  rowValues: number[],
+  maxRowValueLength: number,
+): string {
+  return ' '.repeat(maxRowValueLength - rowValues.length) + rowValues.join('');
+}
+
+function getBodyCharacterLine(row: CellState[]): string {
   return `|${getRowCharacters(row)}|\n`;
 }
 
-function getHeader(length: number): string {
-  return `/${getDashes(length)}\\\n`;
+function getHeader(length: number, offset: number): string {
+  return ' '.repeat(offset) + `/${getDashes(length)}\\\n`;
 }
 
 function getFooter(length: number): string {

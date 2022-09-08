@@ -144,7 +144,7 @@ describe('table', () => {
       );
     });
 
-    it.skip('prints the table with multiple numbers in rows', () => {
+    it('prints the table with multiple numbers in rows', () => {
       const columnValues = [[], [], [], [], []];
       const rowValues = [[1], [1, 2], [3], [1, 1, 1], [2]];
       const table = new Table(rowValues, columnValues);
