@@ -63,14 +63,15 @@ function getCollumnValuesPrint(collumnValues: readonly number[][]): string {
   let result = '';
   for (let line = 0; line < max; line += 1) {
     let lineStr = ' ';
-    collumnValues.forEach((vals) => {
-      const indexToPrint = line - (max - vals.length);
-      if (indexToPrint < 0) {
-        lineStr += ' ';
-        return;
-      }
-      lineStr += vals[indexToPrint].toString();
-    });
+    lineStr += collumnValues
+      .map((vals) => {
+        const indexToPrint = line - (max - vals.length);
+        if (indexToPrint < 0) {
+          return ' ';
+        }
+        return vals[indexToPrint].toString();
+      })
+      .join('');
     lineStr += ' \n';
     result += lineStr;
   }
