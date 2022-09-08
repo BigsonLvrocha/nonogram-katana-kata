@@ -46,21 +46,25 @@ export class Table {
   }
 
   public toString(): string {
-    return this.cells
-      .map((row) =>
-        row
-          .map((cell) => {
-            switch (cell) {
-              case CellState.EMPTY:
-                return 'X';
-              case CellState.FILLED:
-                return 'O';
-              default:
-                return '?';
-            }
-          })
-          .join(''),
-      )
-      .join('\n');
+    let result = '/';
+    result += this.cells.map(() => '-').join('') + '\\\n';
+    this.cells.forEach((row) => {
+      result += '|';
+      result += row
+        .map((cell) => {
+          switch (cell) {
+            case CellState.EMPTY:
+              return 'X';
+            case CellState.FILLED:
+              return '*';
+            default:
+              return '?';
+          }
+        })
+        .join('');
+      result += '|\n';
+    });
+    result += '\\' + this.cells.map(() => '-').join('') + '/\n';
+    return result;
   }
 }
