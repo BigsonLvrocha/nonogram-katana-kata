@@ -51,7 +51,7 @@ export class Table {
       getColumnValuesLines(this.columnValues, headerOffet) +
       getHeader(this.columnValues.length, headerOffet) +
       getBody(this.cells, this.rowValues) +
-      getFooter(this.columnValues.length)
+      getFooter(this.columnValues.length, headerOffet)
     );
   }
 }
@@ -140,8 +140,8 @@ function getHeader(length: number, offset: number): string {
   return ' '.repeat(offset) + `/${getDashes(length)}\\\n`;
 }
 
-function getFooter(length: number): string {
-  return `\\${getDashes(length)}/\n`;
+function getFooter(length: number, offset: number): string {
+  return ' '.repeat(offset) + `\\${getDashes(length)}/\n`;
 }
 
 function getDashes(length: number): string {
