@@ -125,7 +125,7 @@ describe('table', () => {
       );
     });
 
-    it.skip('prints the table with multiple numbers in column', () => {
+    it('prints the table with multiple numbers in column', () => {
       const rowValues = [[], [], [], [], []];
       const columnValues = [[1], [1, 2], [3], [1, 1, 1], [2]];
       const table = new Table(rowValues, columnValues);
@@ -144,21 +144,18 @@ describe('table', () => {
       );
     });
 
-    it('prints the table with multiple numbers in rows', () => {
+    it.skip('prints the table with multiple numbers in rows', () => {
       const columnValues = [[], [], [], [], []];
       const rowValues = [[1], [1, 2], [3], [1, 1, 1], [2]];
       const table = new Table(rowValues, columnValues);
 
       expect(table.toString()).toBe(
-        '    1  \n' +
-          '  1 1  \n' +
-          ' 12312 \n' +
-          '/-----\\\n' +
-          '|?????|\n' +
-          '|?????|\n' +
-          '|?????|\n' +
-          '|?????|\n' +
-          '|?????|\n' +
+        '   /-----\\\n' +
+          '  1|?????|\n' +
+          ' 12|?????|\n' +
+          '  3|?????|\n' +
+          '111|?????|\n' +
+          '  2|?????|\n' +
           '\\-----/\n',
       );
     });

@@ -65,10 +65,7 @@ function getColumnValuesLines(columnsValues: readonly number[][]): string {
 }
 
 function getColumnValuesLineLength(columnsValues: readonly number[][]): number {
-  return columnsValues.reduce(
-    (acc, curr) => (acc < curr.length ? curr.length : acc),
-    0,
-  );
+  return Math.max(...columnsValues.map((columnValues) => columnValues.length));
 }
 
 function getColumnValuesLine(
@@ -100,10 +97,10 @@ function getColumnValuesLineCharacter(
 }
 
 function getBody(cells: CellState[][]): string {
-  return cells.map(getRow).join('');
+  return cells.map(getBodyRow).join('');
 }
 
-function getRow(row: CellState[]): string {
+function getBodyRow(row: CellState[]): string {
   return `|${getRowCharacters(row)}|\n`;
 }
 
