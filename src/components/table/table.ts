@@ -46,10 +46,11 @@ export class Table {
   }
 
   public toString(): string {
-    const header = getHeader(this.columnValues.length);
-    const middleRows = getBody(this.cells);
-    const footer = getFooter(this.columnValues.length);
-    return `${header}${middleRows}${footer}`;
+    return (
+      getHeader(this.columnValues.length) +
+      getBody(this.cells) +
+      getFooter(this.columnValues.length)
+    );
   }
 }
 
