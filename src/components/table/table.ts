@@ -60,20 +60,20 @@ function getCollumnValuesPrint(collumnValues: readonly number[][]): string {
     (acc, curr) => (acc < curr.length ? curr.length : acc),
     0,
   );
-  let result = '';
-  for (let line = 0; line < max; line += 1) {
-    const lineStr = ` ${collumnValues
-      .map((vals) => {
-        const indexToPrint = line - (max - vals.length);
-        if (indexToPrint < 0) {
-          return ' ';
-        }
-        return vals[indexToPrint].toString();
-      })
-      .join('')} \n`;
-    result += lineStr;
-  }
-  return result;
+  return Array.from({ length: max }, (_, i) => i)
+    .map(
+      (line) =>
+        ` ${collumnValues
+          .map((vals) => {
+            const indexToPrint = line - (max - vals.length);
+            if (indexToPrint < 0) {
+              return ' ';
+            }
+            return vals[indexToPrint].toString();
+          })
+          .join('')} \n`,
+    )
+    .join('');
 }
 
 function getBody(cells: CellState[][]): string {
