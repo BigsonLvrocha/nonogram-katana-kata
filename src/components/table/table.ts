@@ -48,11 +48,15 @@ export class Table {
   public toString(): string {
     const header = `/${this.cells.map(() => '-').join('')}\\\n`;
     const middleRows = this.cells
-      .map((row) => `|${row.map(getCellCharacter).join('')}|`)
+      .map((row) => `|${getRowCharacters(row)}|\n`)
       .join('\n');
     const footer = `\\${this.cells.map(() => '-').join('')}/\n`;
     return `${header}${middleRows}${footer}`;
   }
+}
+
+function getRowCharacters(row: CellState[]): string {
+  return row.map(getCellCharacter).join('');
 }
 
 function getCellCharacter(cell: CellState): string {
