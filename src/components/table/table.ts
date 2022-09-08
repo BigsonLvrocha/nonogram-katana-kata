@@ -46,13 +46,19 @@ export class Table {
   }
 
   public toString(): string {
-    const header = `/${getDashes(this.cells.length)}\\\n`;
-    const middleRows = this.cells
-      .map((row) => `|${getRowCharacters(row)}|\n`)
-      .join('');
-    const footer = `\\${getDashes(this.cells.length)}/\n`;
+    const header = getHeader(this.columnValues.length);
+    const middleRows = getBody(this.cells);
+    const footer = `\\${getDashes(this.columnValues.length)}/\n`;
     return `${header}${middleRows}${footer}`;
   }
+}
+
+function getBody(cells: CellState[][]): string {
+  return cells.map((row) => `|${getRowCharacters(row)}|\n`).join('');
+}
+
+function getHeader(collumns: number): string {
+  return `/${getDashes(this.columnValues.length)}\\\n`;
 }
 
 function getDashes(number: number): string {
