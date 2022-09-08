@@ -55,7 +55,11 @@ export class Table {
 }
 
 function getBody(cells: CellState[][]): string {
-  return cells.map((row) => `|${getRowCharacters(row)}|\n`).join('');
+  return cells.map(getRow).join('');
+}
+
+function getRow(row: CellState[]): string {
+  return `|${getRowCharacters(row)}|\n`;
 }
 
 function getHeader(length: number): string {
