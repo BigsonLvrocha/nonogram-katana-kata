@@ -56,7 +56,7 @@ export class Table {
 }
 
 function getColumnValuesLines(columnsValues: readonly number[][]): string {
-  const lineLength = getColumnValuesLineLength(columnsValues);
+  const lineLength = getMaxLength(columnsValues);
   return Array.from({ length: lineLength }, (_, i) => i)
     .map((currentLine) =>
       getColumnValuesLine(columnsValues, currentLine, lineLength),
@@ -64,7 +64,7 @@ function getColumnValuesLines(columnsValues: readonly number[][]): string {
     .join('');
 }
 
-function getColumnValuesLineLength(columnsValues: readonly number[][]): number {
+function getMaxLength(columnsValues: readonly number[][]): number {
   return Math.max(...columnsValues.map((columnValues) => columnValues.length));
 }
 
