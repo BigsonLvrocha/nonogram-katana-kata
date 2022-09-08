@@ -48,7 +48,7 @@ export class Table {
   public toString(): string {
     const header = getHeader(this.columnValues.length);
     const middleRows = getBody(this.cells);
-    const footer = `\\${getDashes(this.columnValues.length)}/\n`;
+    const footer = getFooter(this.columnValues.length);
     return `${header}${middleRows}${footer}`;
   }
 }
@@ -57,12 +57,16 @@ function getBody(cells: CellState[][]): string {
   return cells.map((row) => `|${getRowCharacters(row)}|\n`).join('');
 }
 
-function getHeader(collumns: number): string {
-  return `/${getDashes(this.columnValues.length)}\\\n`;
+function getHeader(length: number): string {
+  return `/${getDashes(length)}\\\n`;
 }
 
-function getDashes(number: number): string {
-  return Array.from({ length: number }, () => '-').join('');
+function getFooter(length: number): string {
+  return `\\${getDashes(length)}/\n`;
+}
+
+function getDashes(length: number): string {
+  return Array.from({ length }, () => '-').join('');
 }
 
 function getRowCharacters(row: CellState[]): string {
