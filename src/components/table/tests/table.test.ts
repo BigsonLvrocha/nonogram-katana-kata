@@ -191,5 +191,20 @@ describe('table', () => {
         row.map((val) => expect(val).toBe(CellState.UNKNOWN));
       });
     });
+
+    it('prints correctly', () => {
+      expect(table.toString()).toBe(
+        '   111  \n' +
+          '  31111 \n' +
+          '  11113 \n' +
+          ' /-----\\\n' +
+          '5|?????|\n' +
+          '1|?????|\n' +
+          '5|?????|\n' +
+          '1|?????|\n' +
+          '5|?????|\n' +
+          '\\-----/\n',
+      );
+    });
   });
 });
