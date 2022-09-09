@@ -1,7 +1,14 @@
-export function validateRangeValues(
-  linesValues: number[][],
-  max: number,
+export function validateTableValues(
+  rowValues: number[][],
+  columnValues: number[][],
 ): void {
+  validateNegativeValues(rowValues);
+  validateNegativeValues(columnValues);
+  validateRangeValues(rowValues, columnValues.length);
+  validateRangeValues(columnValues, rowValues.length);
+}
+
+function validateRangeValues(linesValues: number[][], max: number): void {
   linesValues.forEach((lineValues) =>
     validateRangeInLineValues(lineValues, max),
   );
@@ -19,7 +26,7 @@ function validateRangeInLineValues(lineValues: number[], max: number): void {
   }
 }
 
-export function validateNegativeValues(linesValues: number[][]): void {
+function validateNegativeValues(linesValues: number[][]): void {
   linesValues.forEach((lineValues) =>
     lineValues.forEach((value) => {
       if (value < 0 || !Number.isInteger(value)) {

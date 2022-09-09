@@ -1,8 +1,5 @@
 import { CellState } from '../../contants/cell-state-enum';
-import {
-  validateNegativeValues,
-  validateRangeValues,
-} from './table-validation';
+import { validateTableValues } from './table-validation';
 
 export class Table {
   private readonly cells: CellState[][];
@@ -12,10 +9,7 @@ export class Table {
     public readonly columnValues: number[][],
   ) {
     this.cells = this.buildCells();
-    validateNegativeValues(rowValues);
-    validateNegativeValues(columnValues);
-    validateRangeValues(rowValues, columnValues.length);
-    validateRangeValues(columnValues, rowValues.length);
+    validateTableValues(rowValues, columnValues);
   }
 
   public get length(): number {
