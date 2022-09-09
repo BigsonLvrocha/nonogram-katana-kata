@@ -11,9 +11,7 @@ export class Table {
     public readonly rowValues: number[][],
     public readonly columnValues: number[][],
   ) {
-    this.cells = Array.from({ length: rowValues.length }, () =>
-      Array.from({ length: columnValues.length }, () => CellState.UNKNOWN),
-    );
+    this.cells = this.buildCells();
     validateNegativeValues(rowValues);
     validateNegativeValues(columnValues);
     validateRangeValues(rowValues, columnValues.length);
@@ -43,5 +41,11 @@ export class Table {
     if (index >= lineSize) {
       throw new Error('Out of bounds');
     }
+  }
+
+  private buildCells(): CellState[][] {
+    return Array.from({ length: this.rowValues.length }, () =>
+      Array.from({ length: this.columnValues.length }, () => CellState.UNKNOWN),
+    );
   }
 }
