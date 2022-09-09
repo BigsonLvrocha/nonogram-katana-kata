@@ -85,80 +85,6 @@ describe('table', () => {
       expect(() => table.setCell(5, 0, CellState.FILLED)).toThrow();
       expect(() => table.setCell(0, 5, CellState.FILLED)).toThrow();
     });
-
-    it('prints the table', () => {
-      const rowValues = [[], [], [], [], []];
-      const columnValues = [[], [], [], [], []];
-      const table = new Table(rowValues, columnValues);
-
-      table
-        .setCell(0, 0, CellState.FILLED)
-        .setCell(1, 1, CellState.EMPTY)
-        .setCell(2, 2, CellState.FILLED)
-        .setCell(3, 3, CellState.EMPTY)
-        .setCell(4, 4, CellState.FILLED);
-      expect(table.toString()).toBe(
-        '/-----\\\n' +
-          '|*????|\n' +
-          '|?X???|\n' +
-          '|??*??|\n' +
-          '|???X?|\n' +
-          '|????*|\n' +
-          '\\-----/\n',
-      );
-    });
-
-    it('prints the table with numbers in column', () => {
-      const rowValues = [[], [], [], [], []];
-      const columnValues = [[1], [2], [3], [1], [2]];
-      const table = new Table(rowValues, columnValues);
-
-      expect(table.toString()).toBe(
-        ' 12312 \n' +
-          '/-----\\\n' +
-          '|?????|\n' +
-          '|?????|\n' +
-          '|?????|\n' +
-          '|?????|\n' +
-          '|?????|\n' +
-          '\\-----/\n',
-      );
-    });
-
-    it('prints the table with multiple numbers in column', () => {
-      const rowValues = [[], [], [], [], []];
-      const columnValues = [[1], [1, 2], [3], [1, 1, 1], [2]];
-      const table = new Table(rowValues, columnValues);
-
-      expect(table.toString()).toBe(
-        '    1  \n' +
-          '  1 1  \n' +
-          ' 12312 \n' +
-          '/-----\\\n' +
-          '|?????|\n' +
-          '|?????|\n' +
-          '|?????|\n' +
-          '|?????|\n' +
-          '|?????|\n' +
-          '\\-----/\n',
-      );
-    });
-
-    it('prints the table with multiple numbers in rows', () => {
-      const columnValues = [[], [], [], [], []];
-      const rowValues = [[1], [1, 2], [3], [1, 1, 1], [2]];
-      const table = new Table(rowValues, columnValues);
-
-      expect(table.toString()).toBe(
-        '   /-----\\\n' +
-          '  1|?????|\n' +
-          ' 12|?????|\n' +
-          '  3|?????|\n' +
-          '111|?????|\n' +
-          '  2|?????|\n' +
-          '   \\-----/\n',
-      );
-    });
   });
 
   describe('5x5 snake table', () => {
@@ -190,21 +116,6 @@ describe('table', () => {
         expect(row).toHaveLength(5);
         row.map((val) => expect(val).toBe(CellState.UNKNOWN));
       });
-    });
-
-    it('prints correctly', () => {
-      expect(table.toString()).toBe(
-        '   111  \n' +
-          '  31111 \n' +
-          '  11113 \n' +
-          ' /-----\\\n' +
-          '5|?????|\n' +
-          '1|?????|\n' +
-          '5|?????|\n' +
-          '1|?????|\n' +
-          '5|?????|\n' +
-          ' \\-----/\n',
-      );
     });
   });
 });
