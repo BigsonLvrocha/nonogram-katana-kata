@@ -2,16 +2,20 @@ import { CellState } from '../../contants/cell-state-enum';
 import { Table } from './table';
 
 export function table2String(table: Table): string {
-  const { state, rowValues, columnValues } = table;
-  const headerOffet = getMaxLength(rowValues);
+  const { state } = table;
+  const body = getBody(state);
+  // const headerOffet = getMaxLength(rowValues);
+  /*
   return (
     getColumnValuesLines(columnValues, headerOffet) +
     getHeader(columnValues.length, headerOffet) +
     getBody(state, rowValues) +
     getFooter(columnValues.length, headerOffet)
   );
+  */
+  return buildTableFromTuples(body);
 }
-
+/*
 function getColumnValuesLines(
   columnsValues: readonly number[][],
   offset: number,
@@ -60,38 +64,38 @@ function getColumnValuesLineCharacter(
   }
   return columnValues[indexToPrint].toString();
 }
+*/
 
 function getBody(
   cells: CellState[][],
-  rowsValues: readonly number[][],
-): string {
-  const maxRowValueLength = getMaxLength(rowsValues);
-  return cells
-    .map((row, index) => getBodyRow(row, rowsValues[index], maxRowValueLength))
-    .join('');
+  // rowsValues: readonly number[][],
+): Array<Array<[string, string]>> {
+  // const maxRowValueLength = getMaxLength(rowsValues);
+  return cells.map((row) => getBodyRow(row));
 }
 
 function getBodyRow(
   row: CellState[],
-  rowValues: number[],
-  maxRowValueLength: number,
-): string {
-  return (
-    getBodyRowValues(rowValues, maxRowValueLength) + getBodyCharacterLine(row)
-  );
-}
+  // rowValues: number[],
+  // maxRowValueLength: number,
+): Array<[string, string]> {
+  // const rowValuesPart = getBodyRowValues(rowValues, maxRowValueLength)
 
+  return getBodyCharacterLine(row);
+}
+/*
 function getBodyRowValues(
   rowValues: number[],
   maxRowValueLength: number,
 ): string {
   return ' '.repeat(maxRowValueLength - rowValues.length) + rowValues.join('');
 }
-
-function getBodyCharacterLine(row: CellState[]): string {
-  return `|${getRowCharacters(row)}|\n`;
+*/
+function getBodyCharacterLine(row: CellState[]): Array<[string, string]> {
+  return row.map(getCellCharacter);
 }
 
+/*
 function getHeader(length: number, offset: number): string {
   return ' '.repeat(offset) + `/${getDashes(length)}\\\n`;
 }
@@ -107,14 +111,37 @@ function getDashes(length: number): string {
 function getRowCharacters(row: CellState[]): string {
   return row.map(getCellCharacter).join('');
 }
-
-function getCellCharacter(cell: CellState): string {
+*/
+function getCellCharacter(cell: CellState): [string, string] {
   switch (cell) {
     case CellState.EMPTY:
-      return 'X';
+      return ['\\/', '/\\'];
     case CellState.FILLED:
-      return '*';
+      return ['@@', '@@'];
     default:
-      return '?';
+      return ['  ', '  '];
   }
+}
+
+function buildTableFromTuples(
+  tuplesRows: Array<Array<[string, string]>>,
+): string {
+  const width = tuplesRows[0].length;
+  let result = buildHorizontalDivision(width);
+  result += tuplesRows.map(buildTupleRow).join('');
+  return result;
+}
+
+function buildTupleRow(tuples: Array<[string, string]>): string {
+  let result = '|';
+  result += tuples.map((tuple) => tuple[0]).join('|');
+  result += '|\n|';
+  result += tuples.map((tuple) => tuple[1]).join('|');
+  result += '|\n';
+  result += buildHorizontalDivision(tuples.length);
+  return result;
+}
+
+function buildHorizontalDivision(cellLength: number): string {
+  return ' --'.repeat(cellLength) + '\n';
 }

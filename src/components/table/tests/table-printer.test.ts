@@ -2,6 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 import { CellState } from '../../../contants/cell-state-enum';
 import { Table } from '../table';
 import { table2String } from '../table-printer';
+import { empty5x5 } from './fixtures/tableArts';
 
 describe('table printer', () => {
   it('prints the table', () => {
@@ -15,17 +16,9 @@ describe('table printer', () => {
       .setCell(2, 2, CellState.FILLED)
       .setCell(3, 3, CellState.EMPTY)
       .setCell(4, 4, CellState.FILLED);
-    expect(table2String(table)).toBe(
-      '/-----\\\n' +
-        '|*????|\n' +
-        '|?X???|\n' +
-        '|??*??|\n' +
-        '|???X?|\n' +
-        '|????*|\n' +
-        '\\-----/\n',
-    );
+    expect(table2String(table)).toBe(empty5x5);
   });
-
+  /*
   it('prints the table with numbers in column', () => {
     const rowValues = [[], [], [], [], []];
     const columnValues = [[1], [2], [3], [1], [2]];
@@ -102,4 +95,61 @@ describe('table printer', () => {
         ' \\-----/\n',
     );
   });
+
+  it('prints the boot table', () => {
+    const rowValues = [
+      [7],
+      [1, 6],
+      [2, 2],
+      [7],
+      [5, 1],
+      [5, 1],
+      [3, 1, 4, 2],
+      [5, 1, 6, 1],
+      [2, 5, 7, 2],
+      [1, 4, 9, 1],
+      [1, 16, 1],
+      [17, 2],
+      [19],
+      [1, 2, 1, 1],
+      [11, 1, 3],
+    ];
+    const columnValues = [
+      [5],
+      [2, 4],
+      [2, 3, 1],
+      [2, 4, 1],
+      [7, 1],
+      [6, 1],
+      [5, 1],
+      [1, 3, 1],
+      [1, 3, 1],
+      [1, 4, 1],
+      [2, 1, 5, 1],
+      [1, 4, 8],
+      [1, 11],
+      [2, 10],
+      [2, 12],
+      [2, 10],
+      [2, 1, 6, 1],
+      [7, 2, 1, 1],
+      [2, 3, 4],
+      [4],
+    ];
+    const table = new Table(rowValues, columnValues);
+
+    expect(table2String(table)).toBe(
+      '   111  \n' +
+        '  31111 \n' +
+        '  11113 \n' +
+        ' /-----\\\n' +
+        '5|?????|\n' +
+        '1|?????|\n' +
+        '5|?????|\n' +
+        '1|?????|\n' +
+        '5|?????|\n' +
+        ' \\-----/\n',
+    );
+  });
+*/
 });
