@@ -5,7 +5,7 @@ export function table2String(table: Table): string {
   const { state, columnValues, rowValues } = table;
   const headerOffet = getMaxLength(rowValues);
   const columnValueLines = getColumnValuesLines(columnValues, headerOffet);
-  const body = getBody(state);
+  const body = getBody(state, rowValues);
   /*
   return (
     getColumnValuesLines(columnValues, headerOffet) +
@@ -57,10 +57,10 @@ function getColumnValuesLineCharacter(
   if (indexToPrint < 0) {
     return ['  ', '  '];
   }
-  return printNumberCell(columnValues[indexToPrint]);
+  return getNumberCell(columnValues[indexToPrint]);
 }
 
-function printNumberCell(value: number): [string, string] {
+function getNumberCell(value: number): [string, string] {
   if (value < 10) {
     return [' ' + value.toString(), '  '];
   }
@@ -69,29 +69,36 @@ function printNumberCell(value: number): [string, string] {
 
 function getBody(
   cells: CellState[][],
-  // rowsValues: readonly number[][],
+  rowsValues: readonly number[][],
 ): Array<Array<[string, string]>> {
-  // const maxRowValueLength = getMaxLength(rowsValues);
-  return cells.map((row) => getBodyRow(row));
+  const maxRowValueLength = getMaxLength(rowsValues);
+  return cells.map((row, index) =>
+    getBodyRow(row, rowsValues[index], maxRowValueLength),
+  );
 }
 
 function getBodyRow(
   row: CellState[],
-  // rowValues: number[],
-  // maxRowValueLength: number,
-): Array<[string, string]> {
-  // const rowValuesPart = getBodyRowValues(rowValues, maxRowValueLength)
-
-  return getBodyCharacterLine(row);
-}
-/*
-function getBodyRowValues(
-  rowValues: number[],
+  rowValues: readonly number[],
   maxRowValueLength: number,
-): string {
-  return ' '.repeat(maxRowValueLength - rowValues.length) + rowValues.join('');
+): Array<[string, string]> {
+  const rowValuesPart = getBodyRowValues(rowValues, maxRowValueLength);
+
+  return rowValuesPart.concat(getBodyCharacterLine(row));
 }
-*/
+
+function getBodyRowValues(
+  rowValues: readonly number[],
+  maxRowValueLength: number,
+): Array<[string, string]> {
+  const offset = Array.from(
+    { length: maxRowValueLength - rowValues.length },
+    () => ['  ', '  '] as [string, string],
+  );
+  const rowValuesCells = rowValues.map(getNumberCell);
+  return offset.concat(rowValuesCells);
+}
+
 function getBodyCharacterLine(row: CellState[]): Array<[string, string]> {
   return row.map(getCellCharacter);
 }

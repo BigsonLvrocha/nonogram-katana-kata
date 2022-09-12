@@ -6,6 +6,7 @@ import {
   empty5x5,
   tableWithColumnNumbers,
   tableWithMultipleColumnNumbers,
+  tableWithMultipleRowNumbers,
 } from './fixtures/tableArts';
 
 describe('table printer', () => {
@@ -39,23 +40,15 @@ describe('table printer', () => {
     expect(table2String(table)).toBe(tableWithMultipleColumnNumbers);
   });
 
-  /*
   it('prints the table with multiple numbers in rows', () => {
     const columnValues = [[], [], [], [], []];
     const rowValues = [[1], [1, 2], [3], [1, 1, 1], [2]];
     const table = new Table(rowValues, columnValues);
 
-    expect(table2String(table)).toBe(
-      '   /-----\\\n' +
-        '  1|?????|\n' +
-        ' 12|?????|\n' +
-        '  3|?????|\n' +
-        '111|?????|\n' +
-        '  2|?????|\n' +
-        '   \\-----/\n',
-    );
+    expect(table2String(table)).toBe(tableWithMultipleRowNumbers);
   });
 
+  /*
   it('prints the snake table', () => {
     const rowValues = [[5], [1], [5], [1], [5]];
     const columnValues = [
