@@ -16,7 +16,7 @@ export const empty5x5 = ` -- -- -- -- --
  -- -- -- -- --
 `;
 
-export const tableWithRowNumbers = ` -- -- -- -- --
+export const tableWithColumnNumbers = ` -- -- -- -- --
 | 1| 2| 3| 1| 2|
 |  |  |  |  |  |
  -- -- -- -- --
