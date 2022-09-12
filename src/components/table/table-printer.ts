@@ -2,9 +2,10 @@ import { CellState } from '../../contants/cell-state-enum';
 import { Table } from './table';
 
 export function table2String(table: Table): string {
-  const { state } = table;
+  const { state, columnValues, rowValues } = table;
+  const headerOffet = getMaxLength(rowValues);
+  const columnValueLines = getColumnValuesLines(columnValues, headerOffet);
   const body = getBody(state);
-  // const headerOffet = getMaxLength(rowValues);
   /*
   return (
     getColumnValuesLines(columnValues, headerOffet) +
@@ -13,19 +14,17 @@ export function table2String(table: Table): string {
     getFooter(columnValues.length, headerOffet)
   );
   */
-  return buildTableFromTuples(body);
+  return buildTableFromTuples(columnValueLines.concat(body));
 }
-/*
+
 function getColumnValuesLines(
   columnsValues: readonly number[][],
   offset: number,
-): string {
+): Array<Array<[string, string]>> {
   const lineLength = getMaxLength(columnsValues);
-  return Array.from({ length: lineLength }, (_, i) => i)
-    .map((currentLine) =>
-      getColumnValuesLine(columnsValues, currentLine, lineLength, offset),
-    )
-    .join('');
+  return Array.from({ length: lineLength }, (_, i) => i).map((currentLine) =>
+    getColumnValuesLine(columnsValues, currentLine, lineLength, offset),
+  );
 }
 
 function getMaxLength(linesValues: readonly number[][]): number {
@@ -37,19 +36,15 @@ function getColumnValuesLine(
   currentLine: number,
   lineLength: number,
   offset: number,
-): string {
-  return (
-    ' '.repeat(offset + 1) +
-    columnsValues
-      .map((columnValues) => {
-        return getColumnValuesLineCharacter(
-          columnValues,
-          currentLine,
-          lineLength,
-        );
-      })
-      .join('') +
-    ' \n'
+): Array<[string, string]> {
+  const offsetEmptyCells = Array.from(
+    { length: offset },
+    () => ['xx', 'xx'] as [string, string],
+  );
+  return offsetEmptyCells.concat(
+    columnsValues.map((columnValues) =>
+      getColumnValuesLineCharacter(columnValues, currentLine, lineLength),
+    ),
   );
 }
 
@@ -57,14 +52,20 @@ function getColumnValuesLineCharacter(
   columnValues: readonly number[],
   currentLine: number,
   lineLength: number,
-): string {
+): [string, string] {
   const indexToPrint = currentLine - (lineLength - columnValues.length);
   if (indexToPrint < 0) {
-    return ' ';
+    return ['  ', '  '];
   }
-  return columnValues[indexToPrint].toString();
+  return printNumberCell(columnValues[indexToPrint]);
 }
-*/
+
+function printNumberCell(value: number): [string, string] {
+  if (value < 10) {
+    return [' ' + value.toString(), '  '];
+  }
+  return [value.toString(), '  '];
+}
 
 function getBody(
   cells: CellState[][],

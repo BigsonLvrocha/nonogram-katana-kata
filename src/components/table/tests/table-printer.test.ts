@@ -2,7 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 import { CellState } from '../../../contants/cell-state-enum';
 import { Table } from '../table';
 import { table2String } from '../table-printer';
-import { empty5x5 } from './fixtures/tableArts';
+import { empty5x5, tableWithRowNumbers } from './fixtures/tableArts';
 
 describe('table printer', () => {
   it('prints the table', () => {
@@ -18,24 +18,15 @@ describe('table printer', () => {
       .setCell(4, 4, CellState.FILLED);
     expect(table2String(table)).toBe(empty5x5);
   });
-  /*
+
   it('prints the table with numbers in column', () => {
     const rowValues = [[], [], [], [], []];
     const columnValues = [[1], [2], [3], [1], [2]];
     const table = new Table(rowValues, columnValues);
 
-    expect(table2String(table)).toBe(
-      ' 12312 \n' +
-        '/-----\\\n' +
-        '|?????|\n' +
-        '|?????|\n' +
-        '|?????|\n' +
-        '|?????|\n' +
-        '|?????|\n' +
-        '\\-----/\n',
-    );
+    expect(table2String(table)).toBe(tableWithRowNumbers);
   });
-
+  /*
   it('prints the table with multiple numbers in column', () => {
     const rowValues = [[], [], [], [], []];
     const columnValues = [[1], [1, 2], [3], [1, 1, 1], [2]];
