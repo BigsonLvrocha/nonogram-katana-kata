@@ -4,6 +4,7 @@ import { Table } from '../table';
 import { table2String } from '../table-printer';
 import {
   empty5x5,
+  snakeTable,
   tableWithColumnNumbers,
   tableWithMultipleColumnNumbers,
   tableWithMultipleRowNumbers,
@@ -48,7 +49,6 @@ describe('table printer', () => {
     expect(table2String(table)).toBe(tableWithMultipleRowNumbers);
   });
 
-  /*
   it('prints the snake table', () => {
     const rowValues = [[5], [1], [5], [1], [5]];
     const columnValues = [
@@ -60,20 +60,10 @@ describe('table printer', () => {
     ];
     const table = new Table(rowValues, columnValues);
 
-    expect(table2String(table)).toBe(
-      '   111  \n' +
-        '  31111 \n' +
-        '  11113 \n' +
-        ' /-----\\\n' +
-        '5|?????|\n' +
-        '1|?????|\n' +
-        '5|?????|\n' +
-        '1|?????|\n' +
-        '5|?????|\n' +
-        ' \\-----/\n',
-    );
+    expect(table2String(table)).toBe(snakeTable);
   });
 
+  /*
   it('prints the boot table', () => {
     const rowValues = [
       [7],
