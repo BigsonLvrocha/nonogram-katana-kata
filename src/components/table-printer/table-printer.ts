@@ -1,5 +1,5 @@
 import { CellState } from '../../contants/cell-state-enum';
-import { Table } from './table';
+import { Table } from '../table/table';
 
 export function table2String(table: Table): string {
   const { state, columnValues, rowValues } = table;
