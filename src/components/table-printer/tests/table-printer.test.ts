@@ -61,9 +61,6 @@ describe('table printer', () => {
     ];
     const table = new Table(rowValues, columnValues);
 
-    console.log(table);
-    console.log(table2String(table));
-
     expect(table2String(table)).toBe(snakeTable);
   });
 
