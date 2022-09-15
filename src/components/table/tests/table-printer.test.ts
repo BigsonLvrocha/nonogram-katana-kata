@@ -8,6 +8,7 @@ import {
   tableWithColumnNumbers,
   tableWithMultipleColumnNumbers,
   tableWithMultipleRowNumbers,
+  bootTable,
 } from './fixtures/tableArts';
 
 describe('table printer', () => {
@@ -60,10 +61,12 @@ describe('table printer', () => {
     ];
     const table = new Table(rowValues, columnValues);
 
+    console.log(table);
+    console.log(table2String(table));
+
     expect(table2String(table)).toBe(snakeTable);
   });
 
-  /*
   it('prints the boot table', () => {
     const rowValues = [
       [7],
@@ -106,18 +109,6 @@ describe('table printer', () => {
     ];
     const table = new Table(rowValues, columnValues);
 
-    expect(table2String(table)).toBe(
-      '   111  \n' +
-        '  31111 \n' +
-        '  11113 \n' +
-        ' /-----\\\n' +
-        '5|?????|\n' +
-        '1|?????|\n' +
-        '5|?????|\n' +
-        '1|?????|\n' +
-        '5|?????|\n' +
-        ' \\-----/\n',
-    );
+    expect(table2String(table)).toBe(bootTable);
   });
-*/
 });
