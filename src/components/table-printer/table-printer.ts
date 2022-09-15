@@ -103,9 +103,9 @@ function getBodyCharacterLine(row: CellState[]): DrawableCell[] {
 
 function buildTableFromTuples(tuplesRows: DrawableCell[][]): string {
   const width = tuplesRows[0].length;
-  let result = buildHorizontalDivision(width);
-  result += tuplesRows.map(buildTupleRow).join('');
-  return result;
+  return (
+    buildHorizontalDivision(width) + tuplesRows.map(buildTupleRow).join('')
+  );
 }
 
 function buildTupleRow(cells: DrawableCell[]): string {
