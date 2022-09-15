@@ -110,13 +110,15 @@ function buildTableFromTuples(tuplesRows: DrawableCell[][]): string {
 
 function buildTupleRow(cells: DrawableCell[]): string {
   const tuples = cells.map((cell) => cell.draw());
-  let result = '|';
-  result += tuples.map((tuple) => tuple[0]).join('|');
-  result += '|\n|';
-  result += tuples.map((tuple) => tuple[1]).join('|');
-  result += '|\n';
-  result += buildHorizontalDivision(tuples.length);
-  return result;
+  return (
+    buildTupleLine(tuples, 0) +
+    buildTupleLine(tuples, 1) +
+    buildHorizontalDivision(tuples.length)
+  );
+}
+
+function buildTupleLine(tuples: Array<[string, string]>, line: 0 | 1): string {
+  return `|${tuples.map((tuple) => tuple[line]).join('|')}|\n`;
 }
 
 function buildHorizontalDivision(cellLength: number): string {
