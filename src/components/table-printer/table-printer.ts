@@ -1,5 +1,19 @@
 import { CellState } from '../../contants/cell-state-enum';
 import { Table } from '../table/table';
+import {
+  buildFullCell,
+  buildNumberCell,
+  buildXCell,
+  DrawableCell,
+} from '../drawable-cell/drawable-cell';
+
+const blankCell = buildFullCell(' ');
+
+const cellStateToDrawableCellMap: Record<CellState, DrawableCell> = {
+  [CellState.EMPTY]: buildXCell(),
+  [CellState.FILLED]: buildFullCell('@'),
+  [CellState.UNKNOWN]: blankCell,
+};
 
 export function table2String(table: Table): string {
   const { state, columnValues, rowValues } = table;
@@ -12,7 +26,7 @@ export function table2String(table: Table): string {
 function getColumnValuesLines(
   columnsValues: readonly number[][],
   offset: number,
-): Array<Array<[string, string]>> {
+): DrawableCell[][] {
   const lineLength = getMaxLength(columnsValues);
   return Array.from({ length: lineLength }, (_, i) => i).map((currentLine) =>
     getColumnValuesLine(columnsValues, currentLine, lineLength, offset),
@@ -28,10 +42,9 @@ function getColumnValuesLine(
   currentLine: number,
   lineLength: number,
   offset: number,
-): Array<[string, string]> {
-  const offsetEmptyCells = Array.from(
-    { length: offset },
-    () => ['xx', 'xx'] as [string, string],
+): DrawableCell[] {
+  const offsetEmptyCells = Array.from({ length: offset }, () =>
+    buildFullCell('x'),
   );
   return offsetEmptyCells.concat(
     columnsValues.map((columnValues) =>
@@ -44,25 +57,18 @@ function getColumnValuesLineCharacter(
   columnValues: readonly number[],
   currentLine: number,
   lineLength: number,
-): [string, string] {
+): DrawableCell {
   const indexToPrint = currentLine - (lineLength - columnValues.length);
   if (indexToPrint < 0) {
-    return ['  ', '  '];
+    return buildFullCell(' ');
   }
-  return getNumberCell(columnValues[indexToPrint]);
-}
-
-function getNumberCell(value: number): [string, string] {
-  if (value < 10) {
-    return [' ' + value.toString(), '  '];
-  }
-  return [value.toString(), '  '];
+  return buildNumberCell(columnValues[indexToPrint]);
 }
 
 function getBody(
   cells: CellState[][],
   rowsValues: readonly number[][],
-): Array<Array<[string, string]>> {
+): DrawableCell[][] {
   const maxRowValueLength = getMaxLength(rowsValues);
   return cells.map((row, index) =>
     getBodyRow(row, rowsValues[index], maxRowValueLength),
@@ -73,7 +79,7 @@ function getBodyRow(
   row: CellState[],
   rowValues: readonly number[],
   maxRowValueLength: number,
-): Array<[string, string]> {
+): DrawableCell[] {
   const rowValuesPart = getBodyRowValues(rowValues, maxRowValueLength);
 
   return rowValuesPart.concat(getBodyCharacterLine(row));
@@ -82,40 +88,28 @@ function getBodyRow(
 function getBodyRowValues(
   rowValues: readonly number[],
   maxRowValueLength: number,
-): Array<[string, string]> {
+): DrawableCell[] {
   const offset = Array.from(
     { length: maxRowValueLength - rowValues.length },
-    () => ['  ', '  '] as [string, string],
+    () => blankCell,
   );
-  const rowValuesCells = rowValues.map(getNumberCell);
+  const rowValuesCells = rowValues.map(buildNumberCell);
   return offset.concat(rowValuesCells);
 }
 
-function getBodyCharacterLine(row: CellState[]): Array<[string, string]> {
-  return row.map(getCellCharacter);
+function getBodyCharacterLine(row: CellState[]): DrawableCell[] {
+  return row.map((state) => cellStateToDrawableCellMap[state]);
 }
 
-function getCellCharacter(cell: CellState): [string, string] {
-  switch (cell) {
-    case CellState.EMPTY:
-      return ['\\/', '/\\'];
-    case CellState.FILLED:
-      return ['@@', '@@'];
-    default:
-      return ['  ', '  '];
-  }
-}
-
-function buildTableFromTuples(
-  tuplesRows: Array<Array<[string, string]>>,
-): string {
+function buildTableFromTuples(tuplesRows: DrawableCell[][]): string {
   const width = tuplesRows[0].length;
   let result = buildHorizontalDivision(width);
   result += tuplesRows.map(buildTupleRow).join('');
   return result;
 }
 
-function buildTupleRow(tuples: Array<[string, string]>): string {
+function buildTupleRow(cells: DrawableCell[]): string {
+  const tuples = cells.map((cell) => cell.draw());
   let result = '|';
   result += tuples.map((tuple) => tuple[0]).join('|');
   result += '|\n|';
