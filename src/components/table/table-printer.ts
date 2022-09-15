@@ -6,14 +6,6 @@ export function table2String(table: Table): string {
   const headerOffet = getMaxLength(rowValues);
   const columnValueLines = getColumnValuesLines(columnValues, headerOffet);
   const body = getBody(state, rowValues);
-  /*
-  return (
-    getColumnValuesLines(columnValues, headerOffet) +
-    getHeader(columnValues.length, headerOffet) +
-    getBody(state, rowValues) +
-    getFooter(columnValues.length, headerOffet)
-  );
-  */
   return buildTableFromTuples(columnValueLines.concat(body));
 }
 
@@ -103,23 +95,6 @@ function getBodyCharacterLine(row: CellState[]): Array<[string, string]> {
   return row.map(getCellCharacter);
 }
 
-/*
-function getHeader(length: number, offset: number): string {
-  return ' '.repeat(offset) + `/${getDashes(length)}\\\n`;
-}
-
-function getFooter(length: number, offset: number): string {
-  return ' '.repeat(offset) + `\\${getDashes(length)}/\n`;
-}
-
-function getDashes(length: number): string {
-  return Array.from({ length }, () => '-').join('');
-}
-
-function getRowCharacters(row: CellState[]): string {
-  return row.map(getCellCharacter).join('');
-}
-*/
 function getCellCharacter(cell: CellState): [string, string] {
   switch (cell) {
     case CellState.EMPTY:
