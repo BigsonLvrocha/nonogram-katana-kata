@@ -13,3 +13,9 @@ export function buildXCell(): DrawableCell {
     draw: () => ['\\/', '/\\'],
   };
 }
+
+export function buildNumberCell(value: number): DrawableCell {
+  return {
+    draw: () => [value < 10 ? ' ' + value.toString() : value.toString(), '  '],
+  };
+}
