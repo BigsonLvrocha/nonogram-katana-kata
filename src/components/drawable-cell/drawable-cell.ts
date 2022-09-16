@@ -32,12 +32,7 @@ function addRightBorder(
   doubleRight = false,
   drawTop = false,
 ): string[] {
-  let borderToAdd = '||';
-  if (drawTop) {
-    borderToAdd = ' ' + borderToAdd;
-  }
-  const spacesToAdd = cell.length - borderToAdd.length;
-  borderToAdd += ' '.repeat(spacesToAdd);
+  const borderToAdd = getBorderToAdd(cell.length, drawTop);
   return cell.map((line, index) =>
     line
       .concat(borderToAdd.charAt(index))
@@ -53,13 +48,17 @@ function addLeftBorder(
   if (!drawLeft) {
     return cell;
   }
+  const borderToAdd = getBorderToAdd(cell.length, drawTop);
+  return cell.map((line, index) => borderToAdd.charAt(index).concat(line));
+}
+
+function getBorderToAdd(length: number, drawTop = false): string {
   let borderToAdd = '||';
   if (drawTop) {
     borderToAdd = ' ' + borderToAdd;
   }
-  const spacesToAdd = cell.length - borderToAdd.length;
-  borderToAdd += ' '.repeat(spacesToAdd);
-  return cell.map((line, index) => borderToAdd.charAt(index).concat(line));
+  const spacesToAdd = length - borderToAdd.length;
+  return borderToAdd + ' '.repeat(spacesToAdd);
 }
 
 function addBottomBorder(cell: string[], doubleBottom = false): string[] {
