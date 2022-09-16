@@ -117,7 +117,7 @@ function drawTableFromDrawableCells(
     .map((cellsRow, index) =>
       drawCellRow(cellsRow, rowValuesLength, {
         drawTop: isStartingEdge(index),
-        doubleBottom: shouldDrawDivision(columnValuesLength, index),
+        doubleBottom: isDivision(columnValuesLength, index),
       }),
     )
     .join('\n');
@@ -147,12 +147,12 @@ function drawCell(
 ): string[] {
   return cell.draw({
     drawLeft: isStartingEdge(index),
-    doubleRight: shouldDrawDivision(rowValuesLength, index),
+    doubleRight: isDivision(rowValuesLength, index),
     ...options,
   });
 }
 
-function shouldDrawDivision(valuesLength: number, index: number): boolean {
+function isDivision(valuesLength: number, index: number): boolean {
   return valuesLength - 1 - index === 0;
 }
 
