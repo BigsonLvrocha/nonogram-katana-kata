@@ -53,12 +53,8 @@ function addLeftBorder(
 }
 
 function getBorderToAdd(length: number, drawTop = false): string {
-  let borderToAdd = '||';
-  if (drawTop) {
-    borderToAdd = ' ' + borderToAdd;
-  }
-  const spacesToAdd = length - borderToAdd.length;
-  return borderToAdd + ' '.repeat(spacesToAdd);
+  const borderToAdd = `${drawTop ? ' ' : ''}||`;
+  return borderToAdd + ' '.repeat(length - borderToAdd.length);
 }
 
 function addBottomBorder(cell: string[], doubleBottom = false): string[] {
