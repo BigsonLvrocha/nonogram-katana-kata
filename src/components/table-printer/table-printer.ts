@@ -110,16 +110,16 @@ function getBodyCharacterLine(row: CellState[]): DrawableCell[] {
 
 function buildTableFromDrawableCells(
   cellsRows: DrawableCell[][],
-  rowLength: number,
-  columnLength: number,
+  rowValuesLength: number,
+  columnValuesLength: number,
 ): string {
   return cellsRows
     .map((cellsRow, index) =>
       buildCellRow(
         cellsRow,
-        rowLength,
+        rowValuesLength,
         index === 0,
-        columnLength - 1 - index === 0,
+        shouldDrawDivision(columnValuesLength, index),
       ),
     )
     .join('\n');
@@ -127,7 +127,7 @@ function buildTableFromDrawableCells(
 
 function buildCellRow(
   cells: DrawableCell[],
-  rowLength: number,
+  rowValuesLength: number,
   drawTop: boolean,
   doubleBottom: boolean,
 ): string {
@@ -136,7 +136,7 @@ function buildCellRow(
       drawLeft: index === 0,
       drawTop,
       doubleBottom,
-      doubleRight: rowLength - 1 - index === 0,
+      doubleRight: shouldDrawDivision(rowValuesLength, index),
     }),
   );
   const joinedCells = cellsDrawings.reduce(
@@ -144,4 +144,8 @@ function buildCellRow(
     buildArray(cellsDrawings[0].length, () => ''),
   );
   return joinedCells.join('\n');
+}
+
+function shouldDrawDivision(valuesLength: number, index: number): boolean {
+  return valuesLength - 1 - index === 0;
 }
