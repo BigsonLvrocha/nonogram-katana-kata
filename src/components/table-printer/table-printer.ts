@@ -6,6 +6,7 @@ import {
   buildXCell,
   DrawableCell,
 } from '../drawable-cell/drawable-cell';
+import { buildArray } from '../../services/array';
 
 const blankCell = buildFullCell(' ');
 
@@ -31,14 +32,13 @@ function getHeaderDrawableCells(
   offset: number,
 ): DrawableCell[][] {
   const columnValuesLineLength = getMaxLength(columnsValues);
-  return Array.from({ length: columnValuesLineLength }, (_, i) => i).map(
-    (currentLine) =>
-      getColumnValuesLine(
-        columnsValues,
-        currentLine,
-        columnValuesLineLength,
-        offset,
-      ),
+  return buildArray(columnValuesLineLength, (i) => i).map((currentLine) =>
+    getColumnValuesLine(
+      columnsValues,
+      currentLine,
+      columnValuesLineLength,
+      offset,
+    ),
   );
 }
 
@@ -52,9 +52,7 @@ function getColumnValuesLine(
   lineLength: number,
   offset: number,
 ): DrawableCell[] {
-  const offsetEmptyCells = Array.from({ length: offset }, () =>
-    buildFullCell('x'),
-  );
+  const offsetEmptyCells = buildArray(offset, () => buildFullCell('x'));
   return offsetEmptyCells.concat(
     columnsValues.map((columnValues) =>
       getColumnValuesLineCharacter(columnValues, currentLine, lineLength),
@@ -98,8 +96,8 @@ function getBodyRowValues(
   rowValues: readonly number[],
   maxRowValueLength: number,
 ): DrawableCell[] {
-  const offset = Array.from(
-    { length: maxRowValueLength - rowValues.length },
+  const offset = buildArray(
+    maxRowValueLength - rowValues.length,
     () => blankCell,
   );
   const rowValuesCells = rowValues.map(buildNumberCell);
@@ -143,7 +141,7 @@ function buildCellRow(
   );
   const joinedCells = cellsDrawings.reduce(
     (acc, cur) => acc.map((line, index) => line + cur[index]),
-    Array.from({ length: cellsDrawings[0].length }, () => ''),
+    buildArray(cellsDrawings[0].length, () => ''),
   );
   return joinedCells.join('\n');
 }
