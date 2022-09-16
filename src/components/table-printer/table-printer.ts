@@ -20,7 +20,11 @@ export function table2String(table: Table): string {
   const headerOffet = getMaxLength(rowValues);
   const columnValueLines = getColumnValuesLines(columnValues, headerOffet);
   const body = getBody(state, rowValues);
-  return buildTableFromTuples(columnValueLines.concat(body));
+  return buildTableFromDrawableCells(
+    columnValueLines.concat(body),
+    getMaxLength(rowValues),
+    getMaxLength(columnValues),
+  );
 }
 
 function getColumnValuesLines(
@@ -101,26 +105,40 @@ function getBodyCharacterLine(row: CellState[]): DrawableCell[] {
   return row.map((state) => cellStateToDrawableCellMap[state]);
 }
 
-function buildTableFromTuples(tuplesRows: DrawableCell[][]): string {
-  return (
-    buildHorizontalDivision(tuplesRows[0].length) +
-    tuplesRows.map(buildTupleRow).join('')
+function buildTableFromDrawableCells(
+  cellsRows: DrawableCell[][],
+  rowLength: number,
+  columnLength: number,
+): string {
+  return cellsRows
+    .map((cellsRow, index) =>
+      buildCellRow(
+        cellsRow,
+        rowLength,
+        index === 0,
+        columnLength - 1 - index === 0,
+      ),
+    )
+    .join('\n');
+}
+
+function buildCellRow(
+  cells: DrawableCell[],
+  rowLength: number,
+  drawTop: boolean,
+  doubleBottom: boolean,
+): string {
+  const cellsDrawings = cells.map((cell, index) =>
+    cell.draw({
+      drawLeft: index === 0,
+      drawTop,
+      doubleBottom,
+      doubleRight: rowLength - 1 - index === 0,
+    }),
   );
-}
-
-function buildTupleRow(cells: DrawableCell[]): string {
-  const tuples = cells.map((cell) => cell.draw());
-  return (
-    buildTupleLine(tuples, 0) +
-    buildTupleLine(tuples, 1) +
-    buildHorizontalDivision(tuples.length)
+  const joinedCells = cellsDrawings.reduce(
+    (acc, cur) => acc.map((line, index) => line + cur[index]),
+    Array.from({ length: cellsDrawings[0].length }, () => ''),
   );
-}
-
-function buildTupleLine(tuples: Array<[string, string]>, line: 0 | 1): string {
-  return `|${tuples.map((tuple) => tuple[line]).join('|')}|\n`;
-}
-
-function buildHorizontalDivision(cellLength: number): string {
-  return ' --'.repeat(cellLength) + '\n';
+  return joinedCells.join('\n');
 }
