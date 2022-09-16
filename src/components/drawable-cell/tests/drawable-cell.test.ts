@@ -7,6 +7,16 @@ describe('Drawable Cell', () => {
       const cell = buildFullCell('@');
       expect(cell.draw()).toEqual(['@@|', '@@|', '-- ']);
     });
+
+    it('builds a cell with a top', () => {
+      const cell = buildFullCell(' ');
+      expect(cell.draw({ drawTop: true })).toEqual([
+        '-- ',
+        '  |',
+        '  |',
+        '-- ',
+      ]);
+    });
   });
 
   describe('buildXCell', () => {
