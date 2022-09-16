@@ -17,24 +17,28 @@ const cellStateToDrawableCellMap: Record<CellState, DrawableCell> = {
 
 export function table2String(table: Table): string {
   const { state, columnValues, rowValues } = table;
-  const columnValueLines = getColumnValuesLines(
-    columnValues,
-    getMaxLength(rowValues),
-  );
   return buildTableFromDrawableCells(
-    columnValueLines.concat(getBody(state, rowValues)),
+    getHeaderDrawableCells(columnValues, getMaxLength(rowValues)).concat(
+      getBodyDrawableCells(state, rowValues),
+    ),
     getMaxLength(rowValues),
     getMaxLength(columnValues),
   );
 }
 
-function getColumnValuesLines(
+function getHeaderDrawableCells(
   columnsValues: readonly number[][],
   offset: number,
 ): DrawableCell[][] {
-  const lineLength = getMaxLength(columnsValues);
-  return Array.from({ length: lineLength }, (_, i) => i).map((currentLine) =>
-    getColumnValuesLine(columnsValues, currentLine, lineLength, offset),
+  const columnValuesLineLength = getMaxLength(columnsValues);
+  return Array.from({ length: columnValuesLineLength }, (_, i) => i).map(
+    (currentLine) =>
+      getColumnValuesLine(
+        columnsValues,
+        currentLine,
+        columnValuesLineLength,
+        offset,
+      ),
   );
 }
 
@@ -70,7 +74,7 @@ function getColumnValuesLineCharacter(
   return buildNumberCell(columnValues[indexToPrint]);
 }
 
-function getBody(
+function getBodyDrawableCells(
   cells: CellState[][],
   rowsValues: readonly number[][],
 ): DrawableCell[][] {
