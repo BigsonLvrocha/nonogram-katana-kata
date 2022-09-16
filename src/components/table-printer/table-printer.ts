@@ -17,8 +17,10 @@ const cellStateToDrawableCellMap: Record<CellState, DrawableCell> = {
 
 export function table2String(table: Table): string {
   const { state, columnValues, rowValues } = table;
-  const headerOffet = getMaxLength(rowValues);
-  const columnValueLines = getColumnValuesLines(columnValues, headerOffet);
+  const columnValueLines = getColumnValuesLines(
+    columnValues,
+    getMaxLength(rowValues),
+  );
   const body = getBody(state, rowValues);
   return buildTableFromDrawableCells(
     columnValueLines.concat(body),
