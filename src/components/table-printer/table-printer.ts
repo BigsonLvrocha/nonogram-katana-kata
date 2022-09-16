@@ -116,7 +116,7 @@ function drawTableFromDrawableCells(
   return cellsRows
     .map((cellsRow, index) =>
       drawCellRow(cellsRow, rowValuesLength, {
-        drawTop: index === 0,
+        drawTop: isStartingEdge(index),
         doubleBottom: shouldDrawDivision(columnValuesLength, index),
       }),
     )
@@ -146,7 +146,7 @@ function drawCell(
   options: DrawLineOptions,
 ): string[] {
   return cell.draw({
-    drawLeft: index === 0,
+    drawLeft: isStartingEdge(index),
     doubleRight: shouldDrawDivision(rowValuesLength, index),
     ...options,
   });
@@ -154,6 +154,10 @@ function drawCell(
 
 function shouldDrawDivision(valuesLength: number, index: number): boolean {
   return valuesLength - 1 - index === 0;
+}
+
+function isStartingEdge(index: number): boolean {
+  return index === 0;
 }
 
 function drawLineFromStringArray(cellsDrawings: string[][]): string {
