@@ -18,7 +18,7 @@ const cellStateToDrawableCellMap: Record<CellState, DrawableCell> = {
 
 export function table2String(table: Table): string {
   const { state, columnValues, rowValues } = table;
-  return buildTableFromDrawableCells(
+  return drawTableFromDrawableCells(
     getHeaderDrawableCells(columnValues, getMaxLength(rowValues)).concat(
       getBodyDrawableCells(state, rowValues),
     ),
@@ -108,44 +108,59 @@ function getBodyCharacterLine(row: CellState[]): DrawableCell[] {
   return row.map((state) => cellStateToDrawableCellMap[state]);
 }
 
-function buildTableFromDrawableCells(
+function drawTableFromDrawableCells(
   cellsRows: DrawableCell[][],
   rowValuesLength: number,
   columnValuesLength: number,
 ): string {
   return cellsRows
     .map((cellsRow, index) =>
-      buildCellRow(
-        cellsRow,
-        rowValuesLength,
-        index === 0,
-        shouldDrawDivision(columnValuesLength, index),
-      ),
+      drawCellRow(cellsRow, rowValuesLength, {
+        drawTop: index === 0,
+        doubleBottom: shouldDrawDivision(columnValuesLength, index),
+      }),
     )
     .join('\n');
 }
 
-function buildCellRow(
+interface DrawLineOptions {
+  drawTop: boolean;
+  doubleBottom: boolean;
+}
+
+function drawCellRow(
   cells: DrawableCell[],
   rowValuesLength: number,
-  drawTop: boolean,
-  doubleBottom: boolean,
+  opts: DrawLineOptions,
 ): string {
   const cellsDrawings = cells.map((cell, index) =>
-    cell.draw({
-      drawLeft: index === 0,
-      drawTop,
-      doubleBottom,
-      doubleRight: shouldDrawDivision(rowValuesLength, index),
-    }),
+    drawCell(cell, index, rowValuesLength, opts),
   );
-  const joinedCells = cellsDrawings.reduce(
-    (acc, cur) => acc.map((line, index) => line + cur[index]),
-    buildArray(cellsDrawings[0].length, () => ''),
-  );
-  return joinedCells.join('\n');
+  return drawLineFromStringArray(cellsDrawings);
+}
+
+function drawCell(
+  cell: DrawableCell,
+  index: number,
+  rowValuesLength: number,
+  options: DrawLineOptions,
+): string[] {
+  return cell.draw({
+    drawLeft: index === 0,
+    doubleRight: shouldDrawDivision(rowValuesLength, index),
+    ...options,
+  });
 }
 
 function shouldDrawDivision(valuesLength: number, index: number): boolean {
   return valuesLength - 1 - index === 0;
+}
+
+function drawLineFromStringArray(cellsDrawings: string[][]): string {
+  return cellsDrawings
+    .reduce(
+      (acc, cur) => acc.map((line, index) => line + cur[index]),
+      buildArray(cellsDrawings[0].length, () => ''),
+    )
+    .join('\n');
 }
