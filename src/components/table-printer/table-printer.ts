@@ -21,9 +21,8 @@ export function table2String(table: Table): string {
     columnValues,
     getMaxLength(rowValues),
   );
-  const body = getBody(state, rowValues);
   return buildTableFromDrawableCells(
-    columnValueLines.concat(body),
+    columnValueLines.concat(getBody(state, rowValues)),
     getMaxLength(rowValues),
     getMaxLength(columnValues),
   );
