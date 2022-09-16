@@ -9,28 +9,28 @@ export interface DrawableCell {
   draw: (options?: DrawOptions) => string[];
 }
 
+function addCellBorders(cell: [string, string]): string[] {
+  return [cell[0] + '|', cell[1] + '|', '-- '];
+}
+
 export function buildFullCell(character: string): DrawableCell {
   return {
-    draw: () => [
-      character + character + '|',
-      character + character + '|',
-      '-- ',
-    ],
+    draw: () => addCellBorders([character + character, character + character]),
   };
 }
 
 export function buildXCell(): DrawableCell {
   return {
-    draw: () => ['\\/|', '/\\|', '-- '],
+    draw: () => addCellBorders(['\\/', '/\\']),
   };
 }
 
 export function buildNumberCell(value: number): DrawableCell {
   return {
-    draw: () => [
-      (value < 10 ? ' ' + value.toString() : value.toString()) + '|',
-      '  |',
-      '-- ',
-    ],
+    draw: () =>
+      addCellBorders([
+        value < 10 ? ' ' + value.toString() : value.toString(),
+        '  ',
+      ]),
   };
 }
