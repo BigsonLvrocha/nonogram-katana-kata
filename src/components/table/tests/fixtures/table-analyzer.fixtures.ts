@@ -207,18 +207,18 @@ export const dataset: Record<
     },
     answer: {
       colValues: [
+        [LineValueState.EMPTY, LineValueState.EMPTY],
         [LineValueState.EMPTY],
+        [LineValueState.EMPTY, LineValueState.EMPTY],
         [LineValueState.EMPTY],
-        [LineValueState.EMPTY],
-        [LineValueState.EMPTY],
-        [LineValueState.EMPTY],
+        [LineValueState.EMPTY, LineValueState.EMPTY],
       ],
       rowValues: [
+        [LineValueState.EMPTY, LineValueState.EMPTY],
         [LineValueState.EMPTY],
+        [LineValueState.EMPTY, LineValueState.EMPTY],
         [LineValueState.EMPTY],
-        [LineValueState.EMPTY],
-        [LineValueState.EMPTY],
-        [LineValueState.EMPTY],
+        [LineValueState.EMPTY, LineValueState.EMPTY],
       ],
       cells: [
         [
@@ -377,6 +377,196 @@ export const dataset: Record<
           {
             colValIndexes: new Set([1]),
             rowValIndexes: new Set([1]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+        ],
+      ],
+    },
+  },
+  zorro: {
+    table: {
+      columns: [
+        [1, 1],
+        [1, 2],
+        [1, 1, 1],
+        [2, 1],
+        [1, 1],
+      ],
+      rows: [[5], [1], [1], [1], [5]],
+    },
+    answer: {
+      colValues: [
+        [LineValueState.EMPTY, LineValueState.EMPTY],
+        [LineValueState.EMPTY, LineValueState.EMPTY],
+        [LineValueState.EMPTY, LineValueState.EMPTY, LineValueState.EMPTY],
+        [LineValueState.EMPTY, LineValueState.EMPTY],
+        [LineValueState.EMPTY, LineValueState.EMPTY],
+      ],
+      rowValues: [
+        [LineValueState.EMPTY],
+        [LineValueState.EMPTY],
+        [LineValueState.EMPTY],
+        [LineValueState.EMPTY],
+        [LineValueState.EMPTY],
+      ],
+      cells: [
+        [
+          {
+            colValIndexes: new Set([0]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([0]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([0]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([0]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([0]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+        ],
+        [
+          {
+            colValIndexes: new Set([0]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([0]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([0]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([0]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+        ],
+        [
+          {
+            colValIndexes: new Set([0, 1]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([1]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([1]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([0]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([0, 1]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+        ],
+        [
+          {
+            colValIndexes: new Set([1]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([1]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([1]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([1]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+        ],
+        [
+          {
+            colValIndexes: new Set([1]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([1]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([2]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([1]),
+            rowValIndexes: new Set([0]),
+            state: CellState.UNKNOWN,
+            valid: true,
+          },
+          {
+            colValIndexes: new Set([1]),
+            rowValIndexes: new Set([0]),
             state: CellState.UNKNOWN,
             valid: true,
           },
