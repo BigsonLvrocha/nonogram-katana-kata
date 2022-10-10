@@ -9,8 +9,8 @@ export const enum LineValueState {
 
 export interface CellAnalysis {
   state: CellState;
-  colValIndexes: number[];
-  rowValIndexes: number[];
+  colValIndexes: Set<number>;
+  rowValIndexes: Set<number>;
   valid: boolean;
 }
 
@@ -54,12 +54,12 @@ function analizeLine(
   valueGroupValues: number[],
 ): {
   valuesState: LineValueState[];
-  cellIndexes: number[][];
+  cellIndexes: Array<Set<number>>;
   valid: boolean[];
 } {
   const cellValueGroupIndexCandidates = Array.from(
     { length: cellLine.length },
-    () => [] as number[],
+    () => new Set<number>(),
   );
   const startingIndexes = Array.from(
     { length: valueGroupValues.length },
@@ -77,7 +77,7 @@ function analizeLine(
         valueGroupStartCellIndex + valueGroupValues[valueGroupIndex];
         cellIndex += 1
       ) {
-        cellValueGroupIndexCandidates[cellIndex].push(valueGroupIndex);
+        cellValueGroupIndexCandidates[cellIndex].add(valueGroupIndex);
       }
     }
   };
