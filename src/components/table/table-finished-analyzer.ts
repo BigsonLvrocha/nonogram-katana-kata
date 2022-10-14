@@ -12,10 +12,7 @@ function isLineFinished(
 
   for (const cell of cells) {
     if (cell === CellState.FILLED) {
-      if (
-        lastCellState === CellState.UNKNOWN ||
-        lastCellState === CellState.EMPTY
-      ) {
+      if (lastCellState !== CellState.FILLED) {
         currentValueGroup += 1;
         currentValueGroupSize = 0;
 
@@ -25,9 +22,7 @@ function isLineFinished(
       }
 
       currentValueGroupSize += 1;
-    }
-
-    if (cell === CellState.EMPTY || cell === CellState.UNKNOWN) {
+    } else {
       if (lastCellState === CellState.FILLED) {
         if (currentValueGroupSize !== valueGroupsValues[currentValueGroup]) {
           return false;
