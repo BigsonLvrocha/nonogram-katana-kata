@@ -23,10 +23,11 @@ function isLineFinished(
 
       currentValueGroupSize += 1;
     } else {
-      if (lastCellState === CellState.FILLED) {
-        if (currentValueGroupSize !== valueGroupsValues[currentValueGroup]) {
-          return false;
-        }
+      if (
+        lastCellState === CellState.FILLED &&
+        currentValueGroupSize !== valueGroupsValues[currentValueGroup]
+      ) {
+        return false;
       }
     }
 
