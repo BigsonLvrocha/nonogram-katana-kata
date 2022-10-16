@@ -34,18 +34,13 @@ function isLineFinished(
     lastCellState = cell;
   }
 
-  if (currentValueGroup !== valueGroupsValues.length - 1) {
-    return false;
-  }
-
-  if (
-    lastCellState === CellState.FILLED &&
-    currentValueGroupSize !== valueGroupsValues[currentValueGroup]
-  ) {
-    return false;
-  }
-
-  return true;
+  return (
+    !(currentValueGroup !== valueGroupsValues.length - 1) &&
+    !(
+      lastCellState === CellState.FILLED &&
+      currentValueGroupSize !== valueGroupsValues[currentValueGroup]
+    )
+  );
 }
 
 export function isTableFinished(table: Table): boolean {
