@@ -10,6 +10,10 @@ function isLineFinished(
 
   let lastCellState = CellState.UNKNOWN;
 
+  const checkDownBorder = (): boolean =>
+    lastCellState === CellState.FILLED &&
+    currentValueGroupSize !== valueGroupsValues[currentValueGroup];
+
   for (const cell of cells) {
     if (cell === CellState.FILLED) {
       if (lastCellState !== CellState.FILLED) {
@@ -23,10 +27,7 @@ function isLineFinished(
 
       currentValueGroupSize += 1;
     } else {
-      if (
-        lastCellState === CellState.FILLED &&
-        currentValueGroupSize !== valueGroupsValues[currentValueGroup]
-      ) {
+      if (checkDownBorder()) {
         return false;
       }
     }
@@ -35,11 +36,7 @@ function isLineFinished(
   }
 
   return (
-    !(currentValueGroup !== valueGroupsValues.length - 1) &&
-    !(
-      lastCellState === CellState.FILLED &&
-      currentValueGroupSize !== valueGroupsValues[currentValueGroup]
-    )
+    !(currentValueGroup !== valueGroupsValues.length - 1) && !checkDownBorder()
   );
 }
 
