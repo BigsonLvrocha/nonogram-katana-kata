@@ -1,10 +1,10 @@
-interface TableDefinition {
+export interface TableDefinition {
   rows: number[][];
   columns: number[][];
 }
 
-export const tables: Record<string, TableDefinition> = {
-  snake5x5: {
+export const tables = {
+  snake: {
     columns: [
       [3, 1],
       [1, 1, 1],
