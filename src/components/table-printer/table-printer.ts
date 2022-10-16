@@ -5,7 +5,7 @@ import {
   buildNumberCell,
   buildXCell,
   DrawableCell,
-} from '../drawable-cell/drawable-cell';
+} from './drawable-cell';
 import { buildArray } from '../../services/array';
 
 const blankCell = buildFullCell(' ');

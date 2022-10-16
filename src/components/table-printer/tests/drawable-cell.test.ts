@@ -1,5 +1,9 @@
 import { describe, expect, it } from '@jest/globals';
-import { buildFullCell, buildXCell, buildNumberCell } from '../drawable-cell';
+import {
+  buildFullCell,
+  buildXCell,
+  buildNumberCell,
+} from '../../table-printer/drawable-cell';
 
 describe('Drawable Cell', () => {
   describe('buildFullCell', () => {
