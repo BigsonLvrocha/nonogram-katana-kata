@@ -39,7 +39,7 @@ function getLineGroupValues(cells: CellState[]): number[] {
       return acc.concat(1);
     }
 
-    return incrementLastArrayValue(acc);
+    return incrementLastValue(acc);
   }, []);
 }
 
@@ -47,6 +47,6 @@ function isCellStartOfValueGroup(cells: CellState[], index: number): boolean {
   return index === 0 || cells[index - 1] !== CellState.FILLED;
 }
 
-function incrementLastArrayValue(acc: number[]): number[] {
+function incrementLastValue(acc: number[]): number[] {
   return acc.slice(0, acc.length - 1).concat(acc[acc.length - 1] + 1);
 }
