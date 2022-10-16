@@ -1,13 +1,12 @@
 import { CellState } from '../../../../contants/cell-state-enum';
+import {
+  tables,
+  TableDefinition,
+} from '../../../../contants/table-definitions';
 
 interface TableFinishedCase {
   state: CellState[][];
   finished: boolean;
-}
-
-interface TableDefinition {
-  columns: number[][];
-  rows: number[][];
 }
 
 interface TableFinishAnalizerFixture {
@@ -23,16 +22,7 @@ const o = CellState.FILLED;
 
 export const data: TableFinishAnalizerFixture = {
   snake: {
-    table: {
-      columns: [
-        [3, 1],
-        [1, 1, 1],
-        [1, 1, 1],
-        [1, 1, 1],
-        [1, 3],
-      ],
-      rows: [[5], [1], [5], [1], [5]],
-    },
+    table: tables.snake,
     cases: [
       {
         finished: false,
@@ -82,6 +72,31 @@ export const data: TableFinishAnalizerFixture = {
           [o, o, o, u, o],
           [x, x, x, x, o],
           [o, o, o, o, o],
+        ],
+      },
+    ],
+  },
+  cross: {
+    table: tables.cross,
+    cases: [
+      {
+        finished: true,
+        state: [
+          [x, o, o, o, x],
+          [o, o, x, o, o],
+          [o, x, x, x, o],
+          [o, o, x, o, o],
+          [x, o, o, o, x],
+        ],
+      },
+      {
+        finished: false,
+        state: [
+          [x, o, o, o, x],
+          [o, o, x, o, o],
+          [o, x, o, x, o],
+          [o, o, x, o, o],
+          [x, o, o, o, x],
         ],
       },
     ],
