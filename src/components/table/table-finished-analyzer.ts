@@ -35,15 +35,16 @@ function getLineGroupValues(cells: CellState[]): number[] {
       return acc;
     }
 
-    const isNewValueGroup = (): boolean =>
-      index === 0 || arr[index - 1] !== CellState.FILLED;
-
-    if (isNewValueGroup()) {
+    if (isCellStartOfValueGroup(arr, index)) {
       return acc.concat(1);
     }
 
     return incrementLastArrayValue(acc);
   }, []);
+}
+
+function isCellStartOfValueGroup(cells: CellState[], index: number): boolean {
+  return index === 0 || cells[index - 1] !== CellState.FILLED;
 }
 
 function incrementLastArrayValue(acc: number[]): number[] {
