@@ -6,37 +6,28 @@ function isLineFinished(
   cells: CellState[],
 ): boolean {
   let currentValueGroup = -1;
-  let currentValueGroupSize = 0;
+  const valueGroupSizes = [] as number[];
 
   let lastCellState = CellState.UNKNOWN;
-
-  const checkDownBorder = (): boolean =>
-    lastCellState === CellState.FILLED &&
-    currentValueGroupSize !== valueGroupsValues[currentValueGroup];
 
   for (const cell of cells) {
     if (cell === CellState.FILLED) {
       if (lastCellState !== CellState.FILLED) {
         currentValueGroup += 1;
-        currentValueGroupSize = 0;
-
-        if (currentValueGroup >= valueGroupsValues.length) {
-          return false;
-        }
+        valueGroupSizes.push(0);
       }
-
-      currentValueGroupSize += 1;
-    } else {
-      if (checkDownBorder()) {
-        return false;
-      }
+      valueGroupSizes[currentValueGroup] += 1;
     }
 
     lastCellState = cell;
   }
 
   return (
-    !(currentValueGroup !== valueGroupsValues.length - 1) && !checkDownBorder()
+    valueGroupSizes.length === valueGroupsValues.length &&
+    valueGroupSizes.reduce(
+      (acc, curr, index) => acc && curr === valueGroupsValues[index],
+      true,
+    )
   );
 }
 
