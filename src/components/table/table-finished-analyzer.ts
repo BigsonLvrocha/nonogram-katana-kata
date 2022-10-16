@@ -30,21 +30,22 @@ function isLineFinished(
 }
 
 function getLineGroupValues(cells: CellState[]): number[] {
-  let currentValueGroup = -1;
-  const valueGroupSizes = [] as number[];
-
-  let lastCellState = CellState.UNKNOWN;
-
-  for (const cell of cells) {
-    if (cell === CellState.FILLED) {
-      if (lastCellState !== CellState.FILLED) {
-        currentValueGroup += 1;
-        valueGroupSizes.push(0);
-      }
-      valueGroupSizes[currentValueGroup] += 1;
+  return cells.reduce<number[]>((acc, cell, index, arr) => {
+    if (cell !== CellState.FILLED) {
+      return acc;
     }
 
-    lastCellState = cell;
-  }
-  return valueGroupSizes;
+    const isNewValueGroup = (): boolean =>
+      index === 0 || arr[index - 1] !== CellState.FILLED;
+
+    if (isNewValueGroup()) {
+      return acc.concat(1);
+    }
+
+    return incrementLastArrayValue(acc);
+  }, []);
+}
+
+function incrementLastArrayValue(acc: number[]): number[] {
+  return acc.slice(0, acc.length - 1).concat(acc[acc.length - 1] + 1);
 }
