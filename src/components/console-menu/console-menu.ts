@@ -12,11 +12,14 @@ export interface MenuEntryDefinition {
 export class ConsoleMenu {
   constructor(private readonly deps: ConsoleMenuDependencies) {}
 
-  async prompt(menu: MenuEntryDefinition[]): Promise<number> {
+  async prompt(
+    menu: MenuEntryDefinition[],
+    lastQuestion: string = 'Select an option',
+  ): Promise<number> {
     const question = menu
       .map((entry, index) => `${index} - ${entry.text}`)
       .join('\n')
-      .concat('\nSelect an option: ');
+      .concat(`\n${lastQuestion}: `);
 
     const answer = await this.promptWithRetry(question, menu);
 
