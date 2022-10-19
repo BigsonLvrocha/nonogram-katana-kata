@@ -4,18 +4,18 @@ interface ConsoleMenuDependencies {
   prompter: Prompter;
 }
 
-export interface MenuEntryDefinition {
+export interface MenuEntryDefinition<T = any> {
   text: string;
-  onSelected: () => Promise<void> | void;
+  onSelected: () => Promise<T> | T;
 }
 
 export class ConsoleMenu {
   constructor(private readonly deps: ConsoleMenuDependencies) {}
 
-  async prompt(
-    menu: MenuEntryDefinition[],
+  async prompt<T = any>(
+    menu: Array<MenuEntryDefinition<T>>,
     lastQuestion: string = 'Select an option',
-  ): Promise<number> {
+  ): Promise<T> {
     const question = menu
       .map((entry, index) => `${index} - ${entry.text}`)
       .join('\n')
@@ -23,9 +23,7 @@ export class ConsoleMenu {
 
     const answer = await this.promptWithRetry(question, menu);
 
-    await menu[answer].onSelected();
-
-    return answer;
+    return await menu[answer].onSelected();
   }
 
   private async promptWithRetry(

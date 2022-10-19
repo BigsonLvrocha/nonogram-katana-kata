@@ -7,11 +7,11 @@ describe('ConsoleMenu', () => {
     const menuDefinition = [
       {
         text: 'first option',
-        onSelected: jest.fn(async () => await Promise.resolve()),
+        onSelected: jest.fn(async () => await Promise.resolve(0)),
       },
       {
         text: 'second option',
-        onSelected: jest.fn(async () => await Promise.resolve()),
+        onSelected: jest.fn(async () => await Promise.resolve(1)),
       },
     ];
 
@@ -42,11 +42,11 @@ Select an option: `);
     const menuDefinition = [
       {
         text: 'first option',
-        onSelected: jest.fn(async () => await Promise.resolve()),
+        onSelected: jest.fn(() => 0),
       },
       {
         text: 'second option',
-        onSelected: jest.fn(async () => await Promise.resolve()),
+        onSelected: jest.fn(() => 1),
       },
     ];
 
@@ -87,11 +87,11 @@ Select a valid option: `);
     const menuDefinition = [
       {
         text: 'first option',
-        onSelected: jest.fn(async () => await Promise.resolve()),
+        onSelected: jest.fn(async () => await Promise.resolve(0)),
       },
       {
         text: 'second option',
-        onSelected: jest.fn(async () => await Promise.resolve()),
+        onSelected: jest.fn(async () => await Promise.resolve(1)),
       },
     ];
 
