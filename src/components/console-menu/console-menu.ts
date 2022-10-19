@@ -6,7 +6,7 @@ interface ConsoleMenuDependencies {
 
 export interface MenuEntryDefinition {
   text: string;
-  onSelected: () => Promise<void>;
+  onSelected: () => Promise<void> | void;
 }
 
 export class ConsoleMenu {
@@ -28,7 +28,7 @@ export class ConsoleMenu {
     return answer;
   }
 
-  async promptWithRetry(
+  private async promptWithRetry(
     question: string,
     menu: MenuEntryDefinition[],
   ): Promise<number> {

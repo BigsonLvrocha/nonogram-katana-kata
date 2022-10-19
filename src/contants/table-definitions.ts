@@ -3,6 +3,10 @@ export interface TableDefinition {
   columns: number[][];
 }
 
+export interface TableDefinitions {
+  [name: string]: TableDefinition;
+}
+
 export const tables = {
   snake: {
     columns: [
