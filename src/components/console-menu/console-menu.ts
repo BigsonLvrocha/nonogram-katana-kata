@@ -18,11 +18,28 @@ export class ConsoleMenu {
       .join('\n')
       .concat('\nSelect an option: ');
 
+    const answer = await this.promptWithRetry(question, menu);
+
+    await menu[answer].onSelected();
+
+    return answer;
+  }
+
+  async promptWithRetry(
+    question: string,
+    menu: MenuEntryDefinition[],
+  ): Promise<number> {
     const answer = await this.deps.prompter.query(question);
 
     const answerNumber = Number.parseInt(answer, 10);
 
-    await menu[answerNumber].onSelected();
+    if (!(answerNumber in menu)) {
+      return await this.promptWithRetry(
+        `Invalid option!
+Select a valid option: `,
+        menu,
+      );
+    }
 
     return answerNumber;
   }
