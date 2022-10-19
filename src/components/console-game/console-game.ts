@@ -11,8 +11,6 @@ interface ConsoleGameDependencies {
 }
 
 export class ConsoleGame {
-  private table: Table | null = null;
-
   constructor(private readonly deps: ConsoleGameDependencies) {}
 
   async run(tablesDefinitions: TableDefinitions): Promise<void> {
@@ -21,36 +19,39 @@ export class ConsoleGame {
     await this.pickTable(tablesDefinitions);
   }
 
-  private async pickTable(tablesDefinitions: TableDefinitions): Promise<void> {
+  private async pickTable(
+    tablesDefinitions: TableDefinitions,
+  ): Promise<Table | null> {
     const tableSelectionMenu = Object.entries(tablesDefinitions)
       .map(
-        ([tableName, tableDef]): MenuEntryDefinition => ({
+        ([tableName, tableDef]): MenuEntryDefinition<Table | null> => ({
           text: `${tableName} (${tableDef.rows.length}x${tableDef.columns.length})`,
-          onSelected: () => {
-            this.table = new Table(tableDef.rows, tableDef.columns);
-          },
+          onSelected: () => new Table(tableDef.rows, tableDef.columns),
         }),
       )
       .concat({
         text: "I don't want to play anymore",
-        onSelected: () => {},
+        onSelected: () => null,
       });
-    await this.pickTableWithRetries(tableSelectionMenu);
+    return await this.pickTableWithRetries(tableSelectionMenu);
   }
 
   private async pickTableWithRetries(
     menu: MenuEntryDefinition[],
-  ): Promise<boolean> {
-    await this.deps.consoleMenu.prompt(menu, 'Pick a table to play');
+  ): Promise<Table | null> {
+    const table = await this.deps.consoleMenu.prompt(
+      menu,
+      'Pick a table to play',
+    );
 
-    if (this.table != null) {
-      return true;
+    if (table != null) {
+      return table;
     }
 
     const quitConfirm = await this.confirmQuit();
 
     if (quitConfirm) {
-      return false;
+      return null;
     }
 
     return await this.pickTableWithRetries(menu);
