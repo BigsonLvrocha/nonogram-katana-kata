@@ -27,9 +27,9 @@ export class ConsoleMenu {
     return await menu[answer].onSelected(answer);
   }
 
-  private async promptWithRetry(
+  private async promptWithRetry<T = any>(
     question: string,
-    menu: MenuEntryDefinition[],
+    menu: Array<MenuEntryDefinition<T>>,
   ): Promise<number> {
     const answer = await this.deps.prompter.query(question);
 
@@ -43,7 +43,14 @@ Select a valid option: `,
       );
     }
 
-    if (menu[answerNumber].confirm === true) {
+    return await this.confirmMenuEntry(menu, answerNumber);
+  }
+
+  private async confirmMenuEntry<T = any>(
+    menu: Array<MenuEntryDefinition<T>>,
+    answer: number,
+  ): Promise<number> {
+    if (menu[answer].confirm === true) {
       const result = await this.deps.prompter.query('Are you sure? (y/n): ');
 
       if (result !== 'y') {
@@ -51,6 +58,6 @@ Select a valid option: `,
       }
     }
 
-    return answerNumber;
+    return answer;
   }
 }
