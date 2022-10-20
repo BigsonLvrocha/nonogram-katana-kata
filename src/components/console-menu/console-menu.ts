@@ -7,6 +7,7 @@ interface ConsoleMenuDependencies {
 export interface MenuEntryDefinition<T = any> {
   text: string;
   onSelected: (choice: number) => Promise<T> | T;
+  confirm?: boolean;
 }
 
 export class ConsoleMenu {
@@ -40,6 +41,14 @@ export class ConsoleMenu {
 Select a valid option: `,
         menu,
       );
+    }
+
+    if (menu[answerNumber].confirm === true) {
+      const result = await this.deps.prompter.query('Are you sure? (y/n): ');
+
+      if (result !== 'y') {
+        return await this.promptWithRetry('Select an option: ', menu);
+      }
     }
 
     return answerNumber;
