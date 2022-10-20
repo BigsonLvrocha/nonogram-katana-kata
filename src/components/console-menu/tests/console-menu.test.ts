@@ -112,6 +112,7 @@ Select a valid option: `);
 
     expect(promptResult).toBe(0);
     expect(menuDefinition[0].onSelected).toHaveBeenCalledTimes(1);
+    expect(menuDefinition[0].onSelected).toHaveBeenCalledWith(0);
     expect(menuDefinition[1].onSelected).not.toHaveBeenCalled();
 
     expect(mockPrompter.query).toHaveBeenCalled();

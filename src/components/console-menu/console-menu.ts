@@ -6,7 +6,7 @@ interface ConsoleMenuDependencies {
 
 export interface MenuEntryDefinition<T = any> {
   text: string;
-  onSelected: () => Promise<T> | T;
+  onSelected: (choice: number) => Promise<T> | T;
 }
 
 export class ConsoleMenu {
@@ -23,7 +23,7 @@ export class ConsoleMenu {
 
     const answer = await this.promptWithRetry(question, menu);
 
-    return await menu[answer].onSelected();
+    return await menu[answer].onSelected(answer);
   }
 
   private async promptWithRetry(
