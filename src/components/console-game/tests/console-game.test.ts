@@ -1,4 +1,5 @@
 import { expect, describe, it, jest, beforeAll } from '@jest/globals';
+import { Mock } from 'jest-mock';
 import { tables } from '../../../contants/table-definitions';
 import { ConsoleGame } from '../console-game';
 import { Prompter } from '../../console-menu/prompter';
@@ -20,12 +21,18 @@ describe('Console Game', () => {
   const x = CellState.EMPTY;
   */
 
-  describe('Exit at the start game', () => {
-    const log = jest.fn();
+  const buildMocksForAnswers = (
+    answers: string[],
+  ): {
+    log: Mock<(text: string) => void>;
+    mockPrompter: {
+      query: Mock<(_text: string) => Promise<string>>;
+    };
+    consoleMenu: ConsoleMenu;
+    game: ConsoleGame;
+  } => {
+    const log = jest.fn<(text: string) => void>();
 
-    const table2String = jest.fn(() => '');
-
-    const answers = ['2', 'y'];
     let currentAnswer = -1;
 
     const mockPrompter = {
@@ -44,10 +51,15 @@ describe('Console Game', () => {
 
     const game = new ConsoleGame({
       log,
-      table2String,
       prompter: mockPrompter as unknown as Prompter,
       consoleMenu,
     });
+
+    return { log, mockPrompter, consoleMenu, game };
+  };
+
+  describe('Exit at the start game', () => {
+    const { game, log, mockPrompter } = buildMocksForAnswers(['2', 'y']);
 
     beforeAll(async () => {
       await game.run(tableDefinitions);
@@ -55,6 +67,10 @@ describe('Console Game', () => {
 
     it('prompts twice', () => {
       expect(mockPrompter.query).toHaveBeenCalledTimes(2);
+    });
+
+    it('prints only welcome and good bye', () => {
+      expect(log).toHaveBeenCalledTimes(2);
     });
 
     it('prints an welcome page', () => {
@@ -74,8 +90,8 @@ Pick a table to play: `);
       expect(text).toEqual('Are you sure you want to quit? (y/n): ');
     });
 
-    it('prints no table', () => {
-      expect(table2String).not.toHaveBeenCalled();
+    it('prints a bye message', () => {
+      expect(log).nthCalledWith(2, 'Bye');
     });
   });
 });

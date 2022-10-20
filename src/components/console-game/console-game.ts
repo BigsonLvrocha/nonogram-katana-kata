@@ -5,7 +5,6 @@ import { Table } from '../table/table';
 
 interface ConsoleGameDependencies {
   log: (text: string) => void;
-  table2String: (table: Table) => string;
   prompter: Prompter;
   consoleMenu: ConsoleMenu;
 }
@@ -17,6 +16,8 @@ export class ConsoleGame {
     this.deps.log('Welcome to nonogram katana console game');
 
     await this.pickTable(tablesDefinitions);
+
+    this.deps.log('Bye');
   }
 
   private async pickTable(
