@@ -167,4 +167,51 @@ Select something: `);
       'Are you sure? (y/n): ',
     );
   });
+
+  it('sets the confirmation text', async () => {
+    const menuDefinition = [
+      {
+        text: 'first option',
+        onSelected: jest.fn(async () => await Promise.resolve(0)),
+      },
+      {
+        text: 'second option',
+        onSelected: jest.fn(async () => await Promise.resolve(1)),
+        confirm: true,
+        confirmText: 'Are you sure you want to do it?',
+      },
+    ];
+
+    let currentCommand = 0;
+    const commands = ['1', 'y'];
+    const mockPrompter = {
+      query: jest.fn(async (question: string) => {
+        const result = commands[currentCommand];
+        currentCommand += 1;
+        return result;
+      }),
+    };
+
+    const consoleMenu = new ConsoleMenu({
+      prompter: mockPrompter as unknown as Prompter,
+    });
+
+    const promptResult = await consoleMenu.prompt(
+      menuDefinition,
+      'Select something',
+    );
+
+    expect(promptResult).toBe(1);
+    expect(menuDefinition[0].onSelected).not.toHaveBeenCalled();
+    expect(menuDefinition[1].onSelected).toHaveBeenCalledTimes(1);
+
+    expect(mockPrompter.query).toHaveBeenCalledTimes(2);
+    expect(mockPrompter.query.mock.calls[0][0])
+      .toEqual(`0 - ${menuDefinition[0].text}
+1 - ${menuDefinition[1].text}
+Select something: `);
+    expect(mockPrompter.query.mock.calls[1][0]).toEqual(
+      'Are you sure you want to do it? (y/n): ',
+    );
+  });
 });

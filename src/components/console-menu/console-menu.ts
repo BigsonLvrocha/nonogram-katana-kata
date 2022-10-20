@@ -8,6 +8,7 @@ export interface MenuEntryDefinition<T = any> {
   text: string;
   onSelected: (choice: number) => Promise<T> | T;
   confirm?: boolean;
+  confirmText?: string;
 }
 
 export class ConsoleMenu {
@@ -51,7 +52,9 @@ Select a valid option: `,
     answer: number,
   ): Promise<number> {
     if (menu[answer].confirm === true) {
-      const result = await this.deps.prompter.query('Are you sure? (y/n): ');
+      const result = await this.deps.prompter.query(
+        `${menu[answer].confirmText ?? 'Are you sure?'} (y/n): `,
+      );
 
       if (result !== 'y') {
         return await this.promptWithRetry('Select an option: ', menu);
