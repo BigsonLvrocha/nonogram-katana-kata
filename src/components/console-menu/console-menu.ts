@@ -23,7 +23,7 @@ export class ConsoleMenu {
       .join('\n')
       .concat(`\n${lastQuestion}: `);
 
-    const answer = await this.promptWithRetry(question, menu);
+    const answer = await this.promptWithRetry(question, menu, lastQuestion);
 
     return await menu[answer].onSelected(answer);
   }
@@ -31,6 +31,7 @@ export class ConsoleMenu {
   private async promptWithRetry<T = any>(
     question: string,
     menu: Array<MenuEntryDefinition<T>>,
+    lastQuestion: string,
   ): Promise<number> {
     const answer = await this.deps.prompter.query(question);
 
@@ -41,15 +42,17 @@ export class ConsoleMenu {
         `Invalid option!
 Select a valid option: `,
         menu,
+        lastQuestion,
       );
     }
 
-    return await this.confirmMenuEntry(menu, answerNumber);
+    return await this.confirmMenuEntry(menu, answerNumber, lastQuestion);
   }
 
   private async confirmMenuEntry<T = any>(
     menu: Array<MenuEntryDefinition<T>>,
     answer: number,
+    lastQuestion: string,
   ): Promise<number> {
     if (menu[answer].confirm === true) {
       const result = await this.deps.prompter.query(
@@ -57,7 +60,11 @@ Select a valid option: `,
       );
 
       if (result !== 'y') {
-        return await this.promptWithRetry('Select an option: ', menu);
+        return await this.promptWithRetry(
+          `${lastQuestion}: `,
+          menu,
+          lastQuestion,
+        );
       }
     }
 
