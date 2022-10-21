@@ -35,6 +35,7 @@ describe('ConsoleMenu', () => {
     expect(mockPrompter.query.mock.calls[0][0])
       .toEqual(`0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
+
 Select an option: `);
   });
 
@@ -76,10 +77,15 @@ Select an option: `);
     expect(mockPrompter.query.mock.calls[0][0])
       .toEqual(`0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
+
 Select an option: `);
-    expect(mockPrompter.query.mock.calls[1][0]).toEqual(`Invalid option!
+    expect(mockPrompter.query.mock.calls[1][0]).toEqual(`
+Invalid option!
+
 Select a valid option: `);
-    expect(mockPrompter.query.mock.calls[2][0]).toEqual(`Invalid option!
+    expect(mockPrompter.query.mock.calls[2][0]).toEqual(`
+Invalid option!
+
 Select a valid option: `);
   });
 
@@ -119,6 +125,7 @@ Select a valid option: `);
     expect(mockPrompter.query.mock.calls[0][0])
       .toEqual(`0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
+
 Select something: `);
   });
 
@@ -162,6 +169,7 @@ Select something: `);
     expect(mockPrompter.query.mock.calls[0][0])
       .toEqual(`0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
+
 Select something: `);
     expect(mockPrompter.query.mock.calls[1][0]).toEqual(
       'Are you sure? (y/n): ',
@@ -209,6 +217,7 @@ Select something: `);
     expect(mockPrompter.query.mock.calls[0][0])
       .toEqual(`0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
+
 Select something: `);
     expect(mockPrompter.query.mock.calls[1][0]).toEqual(
       'Are you sure you want to do it? (y/n): ',
@@ -255,6 +264,7 @@ Select something: `);
     expect(mockPrompter.query.mock.calls[0][0])
       .toEqual(`0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
+
 Select something: `);
     expect(mockPrompter.query.mock.calls[1][0]).toEqual(
       'Are you sure? (y/n): ',

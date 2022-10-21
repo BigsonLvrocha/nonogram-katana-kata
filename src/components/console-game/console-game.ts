@@ -10,6 +10,7 @@ interface ConsoleGameDependencies {
   log: (text: string) => void;
   prompter: Prompter;
   consoleMenu: ConsoleMenu;
+  clear: () => void;
 }
 
 export class ConsoleGame {
@@ -26,10 +27,13 @@ export class ConsoleGame {
         return;
       }
 
+      this.deps.clear();
+
       await new TableGame(table.rows, table.columns, {
         consoleMenu: this.deps.consoleMenu,
         log: this.deps.log,
         promt: this.deps.prompter,
+        clear: this.deps.clear,
       }).runGame();
     }
   }

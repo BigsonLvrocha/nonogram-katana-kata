@@ -21,7 +21,7 @@ export class ConsoleMenu {
     const question = menu
       .map((entry, index) => `${index} - ${entry.text}`)
       .join('\n')
-      .concat(`\n${lastQuestion}: `);
+      .concat(`\n\n${lastQuestion}: `);
 
     const answer = await this.promptWithRetry(question, menu, lastQuestion);
 
@@ -39,7 +39,9 @@ export class ConsoleMenu {
 
     if (!(answerNumber in menu)) {
       return await this.promptWithRetry(
-        `Invalid option!
+        `
+Invalid option!
+
 Select a valid option: `,
         menu,
         lastQuestion,

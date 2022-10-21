@@ -9,6 +9,7 @@ interface TableGameDependencies {
   log: (text: string) => void;
   consoleMenu: ConsoleMenu;
   promt: Prompter;
+  clear: () => void;
 }
 
 export class TableGame {
@@ -52,6 +53,7 @@ export class TableGame {
       if (!shouldContinue) {
         return;
       }
+      this.deps.clear();
     }
   }
 

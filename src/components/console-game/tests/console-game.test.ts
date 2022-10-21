@@ -55,6 +55,7 @@ describe('Console Game', () => {
       log,
       prompter: mockPrompter as unknown as Prompter,
       consoleMenu,
+      clear: () => {},
     });
 
     return { log, mockPrompter, consoleMenu, game };
@@ -84,6 +85,7 @@ describe('Console Game', () => {
       expect(text).toEqual(`0 - simplest (2x2)
 1 - snake (5x5)
 2 - I don't want to play anymore
+
 Pick a table to play: `);
     });
 
@@ -137,6 +139,7 @@ Pick a table to play: `);
       expect(mockPrompter.query.mock.calls[1][0]).toEqual(`0 - Mark a cell
 1 - Reset
 2 - Exit
+
 What do you want to do?: `);
     });
 

@@ -19,6 +19,7 @@ const game = new ConsoleGame({
   }),
   log: console.log,
   prompter,
+  clear: console.clear,
 });
 
 game
