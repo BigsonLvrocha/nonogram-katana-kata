@@ -82,7 +82,8 @@ describe('Console Game', () => {
 
     it('promts the player to choose a table', () => {
       const text = mockPrompter.query.mock.calls[0][0];
-      expect(text).toEqual(`0 - simplest (2x2)
+      expect(text).toEqual(`
+0 - simplest (2x2)
 1 - snake (5x5)
 2 - I don't want to play anymore
 
@@ -136,7 +137,8 @@ Pick a table to play: `);
     });
 
     it('prompts for an action in the table', () => {
-      expect(mockPrompter.query.mock.calls[1][0]).toEqual(`0 - Mark a cell
+      expect(mockPrompter.query.mock.calls[1][0]).toEqual(`
+0 - Mark a cell
 1 - Reset
 2 - Exit
 

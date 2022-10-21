@@ -18,10 +18,12 @@ export class ConsoleMenu {
     menu: Array<MenuEntryDefinition<T>>,
     lastQuestion: string = 'Select an option',
   ): Promise<T> {
-    const question = menu
-      .map((entry, index) => `${index} - ${entry.text}`)
-      .join('\n')
-      .concat(`\n\n${lastQuestion}: `);
+    const question = '\n'.concat(
+      menu
+        .map((entry, index) => `${index} - ${entry.text}`)
+        .join('\n')
+        .concat(`\n\n${lastQuestion}: `),
+    );
 
     const answer = await this.promptWithRetry(question, menu, lastQuestion);
 

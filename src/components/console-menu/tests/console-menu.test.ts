@@ -32,8 +32,8 @@ describe('ConsoleMenu', () => {
     expect(menuDefinition[1].onSelected).not.toHaveBeenCalled();
 
     expect(mockPrompter.query).toHaveBeenCalled();
-    expect(mockPrompter.query.mock.calls[0][0])
-      .toEqual(`0 - ${menuDefinition[0].text}
+    expect(mockPrompter.query.mock.calls[0][0]).toEqual(`
+0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
 
 Select an option: `);
@@ -74,8 +74,8 @@ Select an option: `);
     expect(menuDefinition[1].onSelected).not.toHaveBeenCalled();
 
     expect(mockPrompter.query).toHaveBeenCalledTimes(4);
-    expect(mockPrompter.query.mock.calls[0][0])
-      .toEqual(`0 - ${menuDefinition[0].text}
+    expect(mockPrompter.query.mock.calls[0][0]).toEqual(`
+0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
 
 Select an option: `);
@@ -122,8 +122,8 @@ Select a valid option: `);
     expect(menuDefinition[1].onSelected).not.toHaveBeenCalled();
 
     expect(mockPrompter.query).toHaveBeenCalled();
-    expect(mockPrompter.query.mock.calls[0][0])
-      .toEqual(`0 - ${menuDefinition[0].text}
+    expect(mockPrompter.query.mock.calls[0][0]).toEqual(`
+0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
 
 Select something: `);
@@ -166,8 +166,8 @@ Select something: `);
     expect(menuDefinition[1].onSelected).toHaveBeenCalledTimes(1);
 
     expect(mockPrompter.query).toHaveBeenCalledTimes(2);
-    expect(mockPrompter.query.mock.calls[0][0])
-      .toEqual(`0 - ${menuDefinition[0].text}
+    expect(mockPrompter.query.mock.calls[0][0]).toEqual(`
+0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
 
 Select something: `);
@@ -214,8 +214,8 @@ Select something: `);
     expect(menuDefinition[1].onSelected).toHaveBeenCalledTimes(1);
 
     expect(mockPrompter.query).toHaveBeenCalledTimes(2);
-    expect(mockPrompter.query.mock.calls[0][0])
-      .toEqual(`0 - ${menuDefinition[0].text}
+    expect(mockPrompter.query.mock.calls[0][0]).toEqual(`
+0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
 
 Select something: `);
@@ -261,8 +261,8 @@ Select something: `);
     expect(menuDefinition[1].onSelected).toHaveBeenCalledTimes(1);
 
     expect(mockPrompter.query).toHaveBeenCalledTimes(4);
-    expect(mockPrompter.query.mock.calls[0][0])
-      .toEqual(`0 - ${menuDefinition[0].text}
+    expect(mockPrompter.query.mock.calls[0][0]).toEqual(`
+0 - ${menuDefinition[0].text}
 1 - ${menuDefinition[1].text}
 
 Select something: `);
