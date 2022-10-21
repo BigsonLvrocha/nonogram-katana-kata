@@ -4,6 +4,8 @@ import { tables } from '../../../contants/table-definitions';
 import { ConsoleGame } from '../console-game';
 import { Prompter } from '../../console-menu/prompter';
 import { ConsoleMenu } from '../../console-menu/console-menu';
+import { Table } from '../../table/table';
+import { table2String } from '../../table-console-printer/table-printer';
 // import { CellState } from '../../../contants/cell-state-enum';
 
 describe('Console Game', () => {
@@ -92,6 +94,56 @@ Pick a table to play: `);
 
     it('prints a bye message', () => {
       expect(log).nthCalledWith(2, 'Bye');
+    });
+  });
+
+  describe('enter table then exit', () => {
+    const { game, mockPrompter, log } = buildMocksForAnswers([
+      '0',
+      '2',
+      'y',
+      '2',
+      'y',
+    ]);
+
+    beforeAll(async () => {
+      await game.run(tableDefinitions);
+    });
+
+    it('prompts 5 times', () => {
+      expect(mockPrompter.query).toHaveBeenCalledTimes(5);
+    });
+
+    it('prints welcome message', () => {
+      expect(log).toHaveBeenNthCalledWith(
+        1,
+        'Welcome to nonogram katana console game',
+      );
+    });
+
+    it('prints the first table', () => {
+      const table = new Table(
+        tableDefinitions.simplest.rows,
+        tableDefinitions.simplest.columns,
+      );
+      expect(log).toHaveBeenNthCalledWith(2, table2String(table));
+    });
+
+    it('prints bye message', () => {
+      expect(log).toHaveBeenNthCalledWith(3, 'Bye');
+    });
+
+    it('prompts for an action in the table', () => {
+      expect(mockPrompter.query.mock.calls[1][0]).toEqual(`0 - Mark a cell
+1 - Reset
+2 - Exit
+What do you want to do?: `);
+    });
+
+    it('asks if he is sure he wants to quit', () => {
+      expect(mockPrompter.query.mock.calls[2][0]).toEqual(
+        `Are you sure? (y/n): `,
+      );
     });
   });
 });
