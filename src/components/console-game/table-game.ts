@@ -87,12 +87,12 @@ export class TableGame {
     const max = direction === 'row' ? this.rows.length : this.columns.length;
 
     const numberStr = await this.deps.promt.query(
-      `Chose the ${direction} number (0-${max}): `,
+      `Chose the ${direction} number (0-${max - 1}): `,
     );
     const num = Number.parseInt(numberStr, 10);
 
-    if (Number.isNaN(num) || num < 0 || num > max) {
-      this.deps.log('invalid choice give');
+    if (Number.isNaN(num) || num < 0 || num >= max) {
+      this.deps.log('invalid choice given');
       return await this.getCellNumberWithRetries(direction);
     }
 
