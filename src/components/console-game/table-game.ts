@@ -55,6 +55,13 @@ export class TableGame {
       }
       this.deps.clear();
     }
+
+    this.deps.log(table2String(this.table));
+    await this.deps.promt.query(
+      '\n\nCongratulations! you won!!! :D\nPress any key to continue...\n',
+    );
+
+    this.deps.clear();
   }
 
   private resetTable(): void {

@@ -8,6 +8,10 @@ export interface TableDefinitions {
 }
 
 export const tables = {
+  simplest: {
+    columns: [[2], [1]],
+    rows: [[2], [1]],
+  },
   snake: {
     columns: [
       [3, 1],
