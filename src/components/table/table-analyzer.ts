@@ -1,5 +1,4 @@
 import { CellState } from '../../contants/cell-state-enum';
-import { Table } from './table';
 
 export const enum LineValueState {
   EMPTY = 0,
@@ -20,15 +19,17 @@ export interface TableAnalysis {
   rowValues: LineValueState[][];
 }
 
-export function analyzeTable(table: Table): TableAnalysis {
-  const state = table.state;
-
+export function analyzeTable(
+  state: CellState[][],
+  rowValues: number[][],
+  colValues: number[][],
+): TableAnalysis {
   // primeiro faremos por linhas
-  const rowAnalysis = table.rowValues.map((rowVals, index) =>
+  const rowAnalysis = rowValues.map((rowVals, index) =>
     analizeLine(state[index], rowVals),
   );
 
-  const colsAnalysis = table.columnValues.map((colVals, index) => {
+  const colsAnalysis = colValues.map((colVals, index) => {
     const colCells = state.map((row) => row[index]);
     return analizeLine(colCells, colVals);
   });

@@ -12,7 +12,11 @@ describe('table analyzer', () => {
           definition.table.columns,
         );
 
-        const tableAnalisis = analyzeTable(table);
+        const tableAnalisis = analyzeTable(
+          table.state,
+          table.rowValues,
+          table.columnValues,
+        );
 
         definition.answer.cells.forEach((cellsRow, rowIndex) => {
           cellsRow.forEach((cellAnswer, columnIndex) => {
