@@ -1,5 +1,6 @@
 import { CellState } from '../../contants/cell-state-enum';
 import { validateTableValues } from './table-validation';
+import { isTableFinished } from './table-finished-analyzer';
 
 export class Table {
   private readonly cells: CellState[][];
@@ -22,6 +23,10 @@ export class Table {
 
   public get state(): CellState[][] {
     return this.cells.map((row) => row.slice());
+  }
+
+  public get finished(): boolean {
+    return isTableFinished(this.state, this.rowValues, this.columnValues);
   }
 
   public setCell(row: number, collumn: number, state: CellState): this {

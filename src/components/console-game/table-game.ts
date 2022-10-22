@@ -1,4 +1,3 @@
-import { isTableFinished } from '../table/table-finished-analyzer';
 import { Table } from '../table/table';
 import { table2String } from '../table-console-printer/table-printer';
 import { CellState } from '../../contants/cell-state-enum';
@@ -24,13 +23,7 @@ export class TableGame {
   }
 
   async runGame(): Promise<void> {
-    while (
-      !isTableFinished(
-        this.table.state,
-        this.table.rowValues,
-        this.table.columnValues,
-      )
-    ) {
+    while (!this.table.finished) {
       this.deps.log(table2String(this.table));
 
       const shouldContinue = await this.deps.consoleMenu.prompt<boolean>(
