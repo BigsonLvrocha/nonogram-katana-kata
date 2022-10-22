@@ -24,7 +24,13 @@ export class TableGame {
   }
 
   async runGame(): Promise<void> {
-    while (!isTableFinished(this.table)) {
+    while (
+      !isTableFinished(
+        this.table.state,
+        this.table.rowValues,
+        this.table.columnValues,
+      )
+    ) {
       this.deps.log(table2String(this.table));
 
       const shouldContinue = await this.deps.consoleMenu.prompt<boolean>(

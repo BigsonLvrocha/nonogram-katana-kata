@@ -1,13 +1,16 @@
 import { CellState } from '../../contants/cell-state-enum';
-import { Table } from './table';
 
-export function isTableFinished(table: Table): boolean {
-  const rowsFinished = table.state.map((row, index) =>
-    isLineFinished(table.rowValues[index], row),
+export function isTableFinished(
+  state: CellState[][],
+  rowValues: number[][],
+  colValues: number[][],
+): boolean {
+  const rowsFinished = state.map((row, index) =>
+    isLineFinished(rowValues[index], row),
   );
 
-  const colsFinished = table.columnValues.map((colVals, index) => {
-    const lineCells = table.state.map((row) => row[index]);
+  const colsFinished = colValues.map((colVals, index) => {
+    const lineCells = state.map((row) => row[index]);
     return isLineFinished(colVals, lineCells);
   });
 

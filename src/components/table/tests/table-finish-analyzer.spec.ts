@@ -22,7 +22,9 @@ describe('TableFinishedAnalyzer', () => {
         it(`returns as ${
           finished ? 'true' : 'false'
         } for case ${caseIndex}`, () => {
-          expect(isTableFinished(table)).toEqual(finished);
+          expect(
+            isTableFinished(table.state, table.rowValues, table.columnValues),
+          ).toEqual(finished);
         });
       });
     });
