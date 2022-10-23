@@ -18,13 +18,14 @@ const cellStateToDrawableCellMap: Record<CellState, DrawableCell> = {
 
 export function table2String(table: Table): string {
   const { state, columnValues, rowValues } = table;
-  return drawTableFromDrawableCells(
-    getHeaderDrawableCells(columnValues, getMaxLength(rowValues)).concat(
-      getBodyDrawableCells(state, rowValues),
-    ),
-    getMaxLength(rowValues),
-    getMaxLength(columnValues),
-  );
+  return drawTableFromDrawableCells({
+    cellsRows: getHeaderDrawableCells(
+      columnValues,
+      getMaxLength(rowValues),
+    ).concat(getBodyDrawableCells(state, rowValues)),
+    columnValuesLength: getMaxLength(columnValues),
+    rowValuesLength: getMaxLength(rowValues),
+  });
 }
 
 function getHeaderDrawableCells(
@@ -108,16 +109,24 @@ function getBodyCharacterLine(row: CellState[]): DrawableCell[] {
   return row.map((state) => cellStateToDrawableCellMap[state]);
 }
 
-function drawTableFromDrawableCells(
-  cellsRows: DrawableCell[][],
-  rowValuesLength: number,
-  columnValuesLength: number,
-): string {
+function drawTableFromDrawableCells({
+  cellsRows,
+  columnValuesLength,
+  rowValuesLength,
+}: {
+  cellsRows: DrawableCell[][];
+  rowValuesLength: number;
+  columnValuesLength: number;
+}): string {
   return cellsRows
     .map((cellsRow, index) =>
-      drawCellRow(cellsRow, rowValuesLength, {
-        drawTop: isStartingEdge(index),
-        doubleBottom: isDivision(columnValuesLength, index),
+      drawCellRow({
+        cells: cellsRow,
+        rowValuesLength,
+        options: {
+          drawTop: isStartingEdge(index),
+          doubleBottom: isDivision(columnValuesLength, index),
+        },
       }),
     )
     .join('\n');
@@ -128,23 +137,32 @@ interface DrawLineOptions {
   doubleBottom: boolean;
 }
 
-function drawCellRow(
-  cells: DrawableCell[],
-  rowValuesLength: number,
-  opts: DrawLineOptions,
-): string {
+function drawCellRow({
+  cells,
+  options,
+  rowValuesLength,
+}: {
+  cells: DrawableCell[];
+  rowValuesLength: number;
+  options: DrawLineOptions;
+}): string {
   const cellsDrawings = cells.map((cell, index) =>
-    drawCell(cell, index, rowValuesLength, opts),
+    drawCell({ cell, index, rowValuesLength, options }),
   );
   return drawLineFromStringArray(cellsDrawings);
 }
 
-function drawCell(
-  cell: DrawableCell,
-  index: number,
-  rowValuesLength: number,
-  options: DrawLineOptions,
-): string[] {
+function drawCell({
+  cell,
+  index,
+  rowValuesLength,
+  options,
+}: {
+  cell: DrawableCell;
+  index: number;
+  rowValuesLength: number;
+  options: DrawLineOptions;
+}): string[] {
   return cell.draw({
     drawLeft: isStartingEdge(index),
     doubleRight: isDivision(rowValuesLength, index),
