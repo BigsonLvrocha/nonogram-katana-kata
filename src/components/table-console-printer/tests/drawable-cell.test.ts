@@ -133,6 +133,11 @@ describe('Drawable Cell', () => {
         }),
       ).toEqual([' --  ', '|  ||', '|  ||', ' ==  ']);
     });
+
+    it('build a selected cell', () => {
+      const cell = buildFullCell('@');
+      expect(cell.draw({ selected: true })).toEqual(['@@|', '@*|', '-- ']);
+    });
   });
 
   describe('buildXCell', () => {
@@ -140,9 +145,14 @@ describe('Drawable Cell', () => {
       const cell = buildXCell();
       expect(cell.draw()).toEqual(['\\/|', '/\\|', '-- ']);
     });
+
+    it('builds a selected cell with x', () => {
+      const cell = buildXCell();
+      expect(cell.draw({ selected: true })).toEqual(['\\/|', '/*|', '-- ']);
+    });
   });
 
-  describe('buildBumberCell', () => {
+  describe('buildNumberCell', () => {
     it('builds a cell for integer with less than 10', () => {
       const cell = buildNumberCell(9);
       expect(cell.draw()).toEqual([' 9|', '  |', '-- ']);

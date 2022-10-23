@@ -3,6 +3,7 @@ interface DrawOptions {
   drawLeft?: boolean;
   doubleRight?: boolean;
   doubleBottom?: boolean;
+  selected?: boolean;
 }
 
 export interface DrawableCell {
@@ -65,16 +66,30 @@ function addTopBorder(cell: string[], drawTop = false): string[] {
   return drawTop ? ['--'].concat(cell) : cell;
 }
 
+function addSelectedDot(
+  cell: [string, string],
+  selected = false,
+): [string, string] {
+  return selected ? [cell[0], `${cell[1].charAt(0)}*`] : cell;
+}
+
 export function buildFullCell(character: string): DrawableCell {
   return {
     draw: (opts) =>
-      addCellBorders([character + character, character + character], opts),
+      addCellBorders(
+        addSelectedDot(
+          [character + character, character + character],
+          opts?.selected,
+        ),
+        opts,
+      ),
   };
 }
 
 export function buildXCell(): DrawableCell {
   return {
-    draw: (opts) => addCellBorders(['\\/', '/\\'], opts),
+    draw: (opts) =>
+      addCellBorders(addSelectedDot(['\\/', '/\\'], opts?.selected), opts),
   };
 }
 
