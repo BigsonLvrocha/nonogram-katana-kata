@@ -4,6 +4,7 @@ import { isTableFinished } from './table-finished-analyzer';
 
 export class Table {
   private readonly cells: CellState[][];
+  private _selectedCell: [number, number] | undefined;
 
   constructor(
     public readonly rowValues: number[][],
@@ -30,13 +31,18 @@ export class Table {
   }
 
   public get selectedCell(): [number, number] | undefined {
-    return undefined;
+    return this._selectedCell;
   }
 
   public setCell(row: number, collumn: number, state: CellState): this {
     this.checkBounds(row, this.rowValues.length);
     this.checkBounds(collumn, this.columnValues.length);
     this.cells[row][collumn] = state;
+    return this;
+  }
+
+  public selectCell(row: number, col: number): this {
+    this._selectedCell = [row, col];
     return this;
   }
 

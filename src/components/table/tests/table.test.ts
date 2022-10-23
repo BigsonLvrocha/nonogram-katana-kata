@@ -92,7 +92,17 @@ describe('table', () => {
       const table = new Table(rowValues, columnValues);
 
       expect(table.selectedCell).toEqual(undefined);
-    })
+    });
+
+    it('selectes a cell', () => {
+      const rowValues = [[], [], [], [], []];
+      const columnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, columnValues);
+
+      table.selectCell(0, 0);
+
+      expect(table.selectedCell).toEqual([0, 0]);
+    });
   });
 
   describe('5x5 snake table', () => {
