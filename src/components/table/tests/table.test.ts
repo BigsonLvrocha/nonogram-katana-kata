@@ -85,6 +85,14 @@ describe('table', () => {
       expect(() => table.setCell(5, 0, CellState.FILLED)).toThrow();
       expect(() => table.setCell(0, 5, CellState.FILLED)).toThrow();
     });
+
+    it('starts with no cell selected', () => {
+      const rowValues = [[], [], [], [], []];
+      const columnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, columnValues);
+
+      expect(table.selectedCell).toEqual(undefined);
+    })
   });
 
   describe('5x5 snake table', () => {

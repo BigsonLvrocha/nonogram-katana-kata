@@ -29,6 +29,10 @@ export class Table {
     return isTableFinished(this.state, this.rowValues, this.columnValues);
   }
 
+  public get selectedCell(): [number, number] | undefined {
+    return undefined;
+  }
+
   public setCell(row: number, collumn: number, state: CellState): this {
     this.checkBounds(row, this.rowValues.length);
     this.checkBounds(collumn, this.columnValues.length);
