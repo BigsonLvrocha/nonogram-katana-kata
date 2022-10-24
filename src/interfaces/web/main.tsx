@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { TableContext } from './table-context';
+import TableProvider from './table-provider';
 import './main.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <TableContext.Provider value={undefined}>
+    <TableProvider>
       <App />
-    </TableContext.Provider>
+    </TableProvider>
   </React.StrictMode>,
 );
