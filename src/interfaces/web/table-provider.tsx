@@ -6,7 +6,7 @@ interface TableContextType {
   setTable: Dispatch<React.SetStateAction<Table | undefined>>;
 }
 
-const TableContext = createContext<TableContextType>({
+export const tableContext = createContext<TableContextType>({
   setTable: () => {},
 });
 
@@ -17,8 +17,8 @@ export default function TableProvider({
 }): JSX.Element {
   const [table, setTable] = useState<Table | undefined>(undefined);
   return (
-    <TableContext.Provider value={{ table, setTable }}>
+    <tableContext.Provider value={{ table, setTable }}>
       {children}
-    </TableContext.Provider>
+    </tableContext.Provider>
   );
 }

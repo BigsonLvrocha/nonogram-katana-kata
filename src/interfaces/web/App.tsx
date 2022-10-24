@@ -1,9 +1,9 @@
-import { tables } from '../../contants/table-definitions';
-import { Table } from '../../components/table/table';
-import { table2String } from '../../components/table-console-printer/table-printer';
+import { tableContext } from './table-provider';
+import { useContext } from 'react';
+import { TableSelection } from './table-selection';
+import TableGame from './table-game';
 
 export default function App(): JSX.Element {
-  const table = new Table(tables.airplane.rows, tables.airplane.columns);
-  const tableStr = table2String(table);
-  return <pre>{tableStr}</pre>;
+  const { table } = useContext(tableContext);
+  return table != null ? <TableGame /> : <TableSelection />;
 }
