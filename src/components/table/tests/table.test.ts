@@ -103,6 +103,15 @@ describe('table', () => {
 
       expect(table.selectedCell).toEqual([0, 0]);
     });
+
+    it('throws when selecting out of bounds', () => {
+      const rowValues = [[], [], [], [], []];
+      const columnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, columnValues);
+
+      expect(() => table.selectCell(-1, 0)).toThrow();
+      expect(() => table.selectCell(5, 0)).toThrow();
+    });
   });
 
   describe('5x5 snake table', () => {

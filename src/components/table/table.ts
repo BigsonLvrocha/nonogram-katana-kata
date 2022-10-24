@@ -42,12 +42,14 @@ export class Table {
   }
 
   public selectCell(row: number, col: number): this {
+    this.checkBounds(row, this.rowValues.length);
+    this.checkBounds(col, this.columnValues.length);
     this._selectedCell = [row, col];
     return this;
   }
 
   private checkBounds(index: number, lineSize: number): void {
-    if (index >= lineSize) {
+    if (index < 0 || index >= lineSize) {
       throw new Error('Out of bounds');
     }
   }
