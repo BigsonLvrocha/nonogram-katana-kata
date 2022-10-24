@@ -4,6 +4,7 @@ import { Table } from '../../table/table';
 import { table2String } from '../table-printer';
 import {
   empty5x5,
+  empty5x5WithSelected,
   snakeTable,
   tableWithColumnNumbers,
   tableWithMultipleColumnNumbers,
@@ -24,6 +25,21 @@ describe('table printer', () => {
       .setCell(3, 3, CellState.EMPTY)
       .setCell(4, 4, CellState.FILLED);
     expect(table2String(table)).toBe(empty5x5);
+  });
+
+  it('prints the table with selected cell', () => {
+    const rowValues = [[], [], [], [], []];
+    const columnValues = [[], [], [], [], []];
+    const table = new Table(rowValues, columnValues);
+
+    table
+      .setCell(0, 0, CellState.FILLED)
+      .setCell(1, 1, CellState.EMPTY)
+      .setCell(2, 2, CellState.FILLED)
+      .setCell(3, 3, CellState.EMPTY)
+      .setCell(4, 4, CellState.FILLED)
+      .selectCell(0, 0);
+    expect(table2String(table)).toBe(empty5x5WithSelected);
   });
 
   it('prints the table with numbers in column', () => {

@@ -17,7 +17,7 @@ const cellStateToDrawableCellMap: Record<CellState, DrawableCell> = {
 };
 
 export function table2String(table: Table): string {
-  const { state, columnValues, rowValues } = table;
+  const { state, columnValues, rowValues, selectedCell } = table;
   return drawTableFromDrawableCells({
     cellsRows: getHeaderDrawableCells(
       columnValues,
@@ -25,6 +25,7 @@ export function table2String(table: Table): string {
     ).concat(getBodyDrawableCells(state, rowValues)),
     columnValuesLength: getMaxLength(columnValues),
     rowValuesLength: getMaxLength(rowValues),
+    selectedCell,
   });
 }
 
@@ -113,10 +114,12 @@ function drawTableFromDrawableCells({
   cellsRows,
   columnValuesLength,
   rowValuesLength,
+  selectedCell,
 }: {
   cellsRows: DrawableCell[][];
   rowValuesLength: number;
   columnValuesLength: number;
+  selectedCell: [number, number] | undefined;
 }): string {
   return cellsRows
     .map((cellsRow, index) =>
@@ -126,6 +129,10 @@ function drawTableFromDrawableCells({
         options: {
           drawTop: isStartingEdge(index),
           doubleBottom: isDivision(columnValuesLength, index),
+          selectedCellIndex:
+            selectedCell != null && selectedCell[0] === index
+              ? selectedCell[1]
+              : undefined,
         },
       }),
     )
@@ -135,6 +142,7 @@ function drawTableFromDrawableCells({
 interface DrawLineOptions {
   drawTop: boolean;
   doubleBottom: boolean;
+  selectedCellIndex: number | undefined;
 }
 
 function drawCellRow({
@@ -147,7 +155,12 @@ function drawCellRow({
   options: DrawLineOptions;
 }): string {
   const cellsDrawings = cells.map((cell, index) =>
-    drawCell({ cell, index, rowValuesLength, options }),
+    drawCell({
+      cell,
+      index,
+      rowValuesLength,
+      options,
+    }),
   );
   return drawLineFromStringArray(cellsDrawings);
 }
@@ -166,6 +179,7 @@ function drawCell({
   return cell.draw({
     drawLeft: isStartingEdge(index),
     doubleRight: isDivision(rowValuesLength, index),
+    selected: options.selectedCellIndex === index,
     ...options,
   });
 }

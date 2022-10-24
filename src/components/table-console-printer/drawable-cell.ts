@@ -1,4 +1,4 @@
-interface DrawOptions {
+export interface DrawOptions {
   drawTop?: boolean;
   drawLeft?: boolean;
   doubleRight?: boolean;
