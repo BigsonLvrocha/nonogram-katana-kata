@@ -48,6 +48,11 @@ export class Table {
     return this;
   }
 
+  public clearSelection(): this {
+    this._selectedCell = undefined;
+    return this;
+  }
+
   private checkBounds(index: number, lineSize: number): void {
     if (index < 0 || index >= lineSize) {
       throw new Error('Out of bounds');

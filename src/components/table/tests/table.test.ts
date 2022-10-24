@@ -112,6 +112,17 @@ describe('table', () => {
       expect(() => table.selectCell(-1, 0)).toThrow();
       expect(() => table.selectCell(5, 0)).toThrow();
     });
+
+    it('clears selection', () => {
+      const rowValues = [[], [], [], [], []];
+      const columnValues = [[], [], [], [], []];
+      const table = new Table(rowValues, columnValues);
+
+      table.selectCell(0, 0);
+      table.clearSelection();
+
+      expect(table.selectedCell).toEqual(undefined);
+    });
   });
 
   describe('5x5 snake table', () => {
