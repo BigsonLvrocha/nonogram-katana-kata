@@ -10,6 +10,7 @@ import {
   tableWithMultipleColumnNumbers,
   tableWithMultipleRowNumbers,
   bootTable,
+  snakeTableWithSelected,
 } from './fixtures/tableArts';
 
 describe('table printer', () => {
@@ -78,6 +79,21 @@ describe('table printer', () => {
     const table = new Table(rowValues, columnValues);
 
     expect(table2String(table)).toBe(snakeTable);
+  });
+
+  it('prints the snake table with a selected cell', () => {
+    const rowValues = [[5], [1], [5], [1], [5]];
+    const columnValues = [
+      [3, 1],
+      [1, 1, 1],
+      [1, 1, 1],
+      [1, 1, 1],
+      [1, 3],
+    ];
+    const table = new Table(rowValues, columnValues);
+    table.selectCell(0, 0);
+
+    expect(table2String(table)).toBe(snakeTableWithSelected);
   });
 
   it('prints the boot table', () => {

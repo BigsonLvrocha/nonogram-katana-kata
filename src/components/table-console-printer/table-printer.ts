@@ -23,7 +23,7 @@ export function table2String(table: Table): string {
       columnValues,
       getMaxLength(rowValues),
     ).concat(getBodyDrawableCells(state, rowValues)),
-    columnValuesLength: getMaxLength(columnValues),
+    colValuesLength: getMaxLength(columnValues),
     rowValuesLength: getMaxLength(rowValues),
     selectedCell,
   });
@@ -112,13 +112,13 @@ function getBodyCharacterLine(row: CellState[]): DrawableCell[] {
 
 function drawTableFromDrawableCells({
   cellsRows,
-  columnValuesLength,
+  colValuesLength,
   rowValuesLength,
   selectedCell,
 }: {
   cellsRows: DrawableCell[][];
   rowValuesLength: number;
-  columnValuesLength: number;
+  colValuesLength: number;
   selectedCell: [number, number] | undefined;
 }): string {
   return cellsRows
@@ -128,9 +128,9 @@ function drawTableFromDrawableCells({
         rowValuesLength,
         options: {
           drawTop: isStartingEdge(index),
-          doubleBottom: isDivision(columnValuesLength, index),
+          doubleBottom: isDivision(colValuesLength, index),
           selectedCellIndex:
-            selectedCell != null && selectedCell[0] === index
+            selectedCell != null && selectedCell[0] + colValuesLength === index
               ? selectedCell[1]
               : undefined,
         },
@@ -179,7 +179,10 @@ function drawCell({
   return cell.draw({
     drawLeft: isStartingEdge(index),
     doubleRight: isDivision(rowValuesLength, index),
-    selected: options.selectedCellIndex === index,
+    selected:
+      options.selectedCellIndex !== undefined
+        ? options.selectedCellIndex + rowValuesLength === index
+        : false,
     ...options,
   });
 }

@@ -24,7 +24,7 @@ export class TableGame {
 
   async runGame(): Promise<void> {
     while (!this.table.finished) {
-      this.deps.log(table2String(this.table));
+      this.printTable();
 
       const shouldContinue = await this.deps.consoleMenu.prompt<boolean>(
         [
@@ -55,7 +55,7 @@ export class TableGame {
       this.deps.clear();
     }
 
-    this.deps.log(table2String(this.table));
+    this.printTable();
     await this.deps.promt.query(
       '\n\nCongratulations! you won!!! :D\nPress any key to continue...\n',
     );
@@ -70,6 +70,9 @@ export class TableGame {
   private async markCell(): Promise<boolean> {
     const rowNo = await this.getCellNumberWithRetries('row');
     const colNo = await this.getCellNumberWithRetries('collumn');
+    this.table.selectCell(rowNo, colNo);
+    this.deps.clear();
+    this.printTable();
     await this.deps.consoleMenu.prompt([
       {
         text: 'Fill',
@@ -84,6 +87,7 @@ export class TableGame {
         onSelected: () => this.table.setCell(rowNo, colNo, CellState.UNKNOWN),
       },
     ]);
+    this.table.clearSelection();
     return true;
   }
 
@@ -103,5 +107,9 @@ export class TableGame {
     }
 
     return num;
+  }
+
+  private printTable(): void {
+    this.deps.log(table2String(this.table));
   }
 }
