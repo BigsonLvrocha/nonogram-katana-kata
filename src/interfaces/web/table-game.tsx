@@ -1,15 +1,24 @@
 import Button from '@mui/material/Button';
-import { useContext } from 'react';
-import { table2String } from '../../components/table-console-printer/table-printer';
-import { tableContext } from './table-provider';
+import { rawTable2String } from '../../components/table-console-printer/table-printer';
+import { CellState } from '../../contants/cell-state-enum';
+import { useTableGame } from './table-provider';
 
 export default function TableGame(): JSX.Element {
-  const { table, setTable } = useContext(tableContext);
+  const { setTable, table } = useTableGame();
 
-  return (
+  return table != null ? (
     <div>
       <Button onClick={() => setTable(undefined)}>Back</Button>
-      <pre>{table != null ? table2String(table) : null}</pre>
+      <Button
+        onClick={() => {
+          table.setCell(0, 0, CellState.FILLED);
+        }}
+      >
+        Fill
+      </Button>
+      <pre>{table != null ? rawTable2String(table) : null}</pre>
     </div>
+  ) : (
+    <div>Error, no table to show</div>
   );
 }

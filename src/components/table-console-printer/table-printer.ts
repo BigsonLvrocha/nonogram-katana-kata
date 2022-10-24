@@ -18,6 +18,18 @@ const cellStateToDrawableCellMap: Record<CellState, DrawableCell> = {
 
 export function table2String(table: Table): string {
   const { state, columnValues, rowValues, selectedCell } = table;
+  return rawTable2String({ state, columnValues, rowValues, selectedCell });
+}
+
+export function rawTable2String({
+  state,
+  columnValues,
+  rowValues,
+  selectedCell,
+}: Pick<
+  Table,
+  'state' | 'columnValues' | 'rowValues' | 'selectedCell'
+>): string {
   return drawTableFromDrawableCells({
     cellsRows: getHeaderDrawableCells(
       columnValues,
