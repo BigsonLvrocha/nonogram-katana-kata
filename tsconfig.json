@@ -8,8 +8,10 @@
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "node",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "jsx": "react-jsx",
+    "noEmit": false
   },
   "include": ["."],
-  "exclude": ["**/node_modules/**", "jest.config.ts"]
+  "exclude": ["**/node_modules/**", "jest.config.ts", "./vite.config.ts"]
 }
