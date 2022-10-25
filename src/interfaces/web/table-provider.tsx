@@ -28,10 +28,9 @@ const tableActions = {
   }),
 };
 
-type TableActionTypes =
-  | ReturnType<typeof tableActions['resetTable']>
-  | ReturnType<typeof tableActions['setCell']>
-  | ReturnType<typeof tableActions['setTable']>;
+type TableActionTypes = ReturnType<
+  typeof tableActions[keyof typeof tableActions]
+>;
 
 interface TableState {
   table: Table | undefined;
