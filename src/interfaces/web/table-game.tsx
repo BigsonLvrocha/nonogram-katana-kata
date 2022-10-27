@@ -4,14 +4,17 @@ import { useMemo } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import { CellState } from '../../contants/cell-state-enum';
+import MuiTableCell from '@mui/material/TableCell';
 import { useTableGame } from './table-provider';
+import TableCell from './components/table-cell';
 
-const HeaderCell = styled(TableCell)`
+const HeaderCell = styled(MuiTableCell)`
   border-style: solid;
   border-color: black;
   border-width: 1px;
+  height: 1em;
+  width: 1em;
+  text-align: center;
 `;
 
 const BorderCell = styled(HeaderCell)`
@@ -21,37 +24,6 @@ const BorderCell = styled(HeaderCell)`
     black,
     transparent calc(50% + 1px)
   );
-`;
-
-const EmptyCell = styled(TableCell)`
-  border-style: solid;
-  border-width: 1px;
-  border-color: black;
-  padding: 0;
-`;
-
-const CrossedCell = styled(EmptyCell)`
-  background-image: linear-gradient(
-      to left bottom,
-      transparent calc(50% - 1px),
-      black,
-      transparent calc(50% + 1px)
-    ),
-    linear-gradient(
-      to left top,
-      transparent calc(50% - 1px),
-      black,
-      transparent calc(50% + 1px)
-    );
-`;
-
-const FilledCell = styled(EmptyCell)`
-  background-color: black;
-`;
-
-const ToggleButton = styled(Button)`
-  width: 100%;
-  height: 100%;
 `;
 
 export default function TableGame(): JSX.Element {
@@ -96,14 +68,6 @@ export default function TableGame(): JSX.Element {
   return tableCalculations != null ? (
     <div>
       <Button onClick={() => setTable(undefined)}>Back</Button>
-      <Button
-        onClick={() => {
-          tableCalculations.setCell(0, 0, CellState.FILLED);
-          tableCalculations.setCell(1, 1, CellState.EMPTY);
-        }}
-      >
-        Fill
-      </Button>
       <Table style={{ height: '1px' }}>
         <TableBody>
           <TableRow>
@@ -139,50 +103,15 @@ export default function TableGame(): JSX.Element {
                   <HeaderCell key={index}>{cell ?? <>&nbsp;</>}</HeaderCell>
                 ),
               )}
-              {cells.map((cell, colIndex) => {
-                switch (cell) {
-                  case CellState.EMPTY:
-                    return (
-                      <CrossedCell>
-                        <ToggleButton
-                          onClick={() =>
-                            table?.setCell(
-                              rowIndex,
-                              colIndex,
-                              CellState.UNKNOWN,
-                            )
-                          }
-                        >
-                          &nbsp;
-                        </ToggleButton>
-                      </CrossedCell>
-                    );
-                  case CellState.FILLED:
-                    return (
-                      <FilledCell>
-                        <ToggleButton
-                          onClick={() =>
-                            table?.setCell(rowIndex, colIndex, CellState.EMPTY)
-                          }
-                        >
-                          &nbsp;
-                        </ToggleButton>
-                      </FilledCell>
-                    );
-                  default:
-                    return (
-                      <EmptyCell>
-                        <ToggleButton
-                          onClick={() =>
-                            table?.setCell(rowIndex, colIndex, CellState.FILLED)
-                          }
-                        >
-                          &nbsp;
-                        </ToggleButton>
-                      </EmptyCell>
-                    );
-                }
-              })}
+              {cells.map((cell, colIndex) => (
+                <TableCell
+                  key={colIndex}
+                  cell={cell}
+                  onChange={(newState) =>
+                    table?.setCell(rowIndex, colIndex, newState)
+                  }
+                />
+              ))}
             </TableRow>
           ))}
         </TableBody>
