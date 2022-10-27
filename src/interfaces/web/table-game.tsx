@@ -27,6 +27,7 @@ const EmptyCell = styled(TableCell)`
   border-style: solid;
   border-width: 1px;
   border-color: black;
+  padding: 0;
 `;
 
 const CrossedCell = styled(EmptyCell)`
@@ -46,6 +47,11 @@ const CrossedCell = styled(EmptyCell)`
 
 const FilledCell = styled(EmptyCell)`
   background-color: black;
+`;
+
+const ToggleButton = styled(Button)`
+  width: 100%;
+  height: 100%;
 `;
 
 export default function TableGame(): JSX.Element {
@@ -98,7 +104,7 @@ export default function TableGame(): JSX.Element {
       >
         Fill
       </Button>
-      <Table>
+      <Table style={{ height: '1px' }}>
         <TableBody>
           <TableRow>
             <BorderCell
@@ -126,21 +132,55 @@ export default function TableGame(): JSX.Element {
               )}
             </TableRow>
           ))}
-          {tableCalculations.state.map((cells, index) => (
-            <TableRow key={index}>
-              {tableCalculations.rowGroupValueCells[index].map(
+          {tableCalculations.state.map((cells, rowIndex) => (
+            <TableRow key={rowIndex}>
+              {tableCalculations.rowGroupValueCells[rowIndex].map(
                 (cell, index) => (
                   <HeaderCell key={index}>{cell ?? <>&nbsp;</>}</HeaderCell>
                 ),
               )}
-              {cells.map((cell, index) => {
+              {cells.map((cell, colIndex) => {
                 switch (cell) {
                   case CellState.EMPTY:
-                    return <CrossedCell>&nbsp;</CrossedCell>;
+                    return (
+                      <CrossedCell>
+                        <ToggleButton
+                          onClick={() =>
+                            table?.setCell(
+                              rowIndex,
+                              colIndex,
+                              CellState.UNKNOWN,
+                            )
+                          }
+                        >
+                          &nbsp;
+                        </ToggleButton>
+                      </CrossedCell>
+                    );
                   case CellState.FILLED:
-                    return <FilledCell>&nbsp;</FilledCell>;
+                    return (
+                      <FilledCell>
+                        <ToggleButton
+                          onClick={() =>
+                            table?.setCell(rowIndex, colIndex, CellState.EMPTY)
+                          }
+                        >
+                          &nbsp;
+                        </ToggleButton>
+                      </FilledCell>
+                    );
                   default:
-                    return <EmptyCell>&nbsp;</EmptyCell>;
+                    return (
+                      <EmptyCell>
+                        <ToggleButton
+                          onClick={() =>
+                            table?.setCell(rowIndex, colIndex, CellState.FILLED)
+                          }
+                        >
+                          &nbsp;
+                        </ToggleButton>
+                      </EmptyCell>
+                    );
                 }
               })}
             </TableRow>
