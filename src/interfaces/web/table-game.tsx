@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import Button from '@mui/material/Button';
 import { useMemo } from 'react';
 import Table from '@mui/material/Table';
@@ -6,6 +7,18 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import { CellState } from '../../contants/cell-state-enum';
 import { useTableGame } from './table-provider';
+
+const HeaderCell = styled(TableCell)`
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+`;
+
+const NormalCell = styled(TableCell)`
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+`;
 
 export default function TableGame(): JSX.Element {
   const { setTable, table } = useTableGame();
@@ -59,17 +72,17 @@ export default function TableGame(): JSX.Element {
       <Table>
         <TableBody>
           <TableRow>
-            <TableCell
+            <HeaderCell
               rowSpan={tableCalculations.maxColLength}
               colSpan={tableCalculations.maxRowLength}
             >
               &nbsp;
-            </TableCell>
+            </HeaderCell>
             {tableCalculations.colGroupValueCells[0].map((cell) =>
               cell != null ? (
-                <TableCell>{cell}</TableCell>
+                <HeaderCell>{cell}</HeaderCell>
               ) : (
-                <TableCell>&nbsp;</TableCell>
+                <HeaderCell>&nbsp;</HeaderCell>
               ),
             )}
           </TableRow>
@@ -77,9 +90,9 @@ export default function TableGame(): JSX.Element {
             <TableRow key={index}>
               {cells.map((cell) =>
                 cell != null ? (
-                  <TableCell>{cell}</TableCell>
+                  <HeaderCell>{cell}</HeaderCell>
                 ) : (
-                  <TableCell>&nbsp;</TableCell>
+                  <HeaderCell>&nbsp;</HeaderCell>
                 ),
               )}
             </TableRow>
@@ -88,11 +101,11 @@ export default function TableGame(): JSX.Element {
             <TableRow key={index}>
               {tableCalculations.rowGroupValueCells[index].map(
                 (cell, index) => (
-                  <TableCell key={index}>{cell ?? <>&nbsp;</>}</TableCell>
+                  <HeaderCell key={index}>{cell ?? <>&nbsp;</>}</HeaderCell>
                 ),
               )}
               {cells.map((_, index) => (
-                <TableCell key={index}>&nbsp;</TableCell>
+                <NormalCell key={index}>&nbsp;</NormalCell>
               ))}
             </TableRow>
           ))}
