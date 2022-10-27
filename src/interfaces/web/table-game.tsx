@@ -11,13 +11,41 @@ import { useTableGame } from './table-provider';
 const HeaderCell = styled(TableCell)`
   border-style: solid;
   border-color: black;
-  border-width: 2px;
+  border-width: 1px;
 `;
 
-const NormalCell = styled(TableCell)`
+const BorderCell = styled(HeaderCell)`
+  background-image: linear-gradient(
+    to left bottom,
+    transparent calc(50% - 1px),
+    black,
+    transparent calc(50% + 1px)
+  );
+`;
+
+const EmptyCell = styled(TableCell)`
   border-style: solid;
   border-width: 1px;
-  border-color: grey;
+  border-color: black;
+`;
+
+const CrossedCell = styled(EmptyCell)`
+  background-image: linear-gradient(
+      to left bottom,
+      transparent calc(50% - 1px),
+      black,
+      transparent calc(50% + 1px)
+    ),
+    linear-gradient(
+      to left top,
+      transparent calc(50% - 1px),
+      black,
+      transparent calc(50% + 1px)
+    );
+`;
+
+const FilledCell = styled(EmptyCell)`
+  background-color: black;
 `;
 
 export default function TableGame(): JSX.Element {
@@ -65,6 +93,7 @@ export default function TableGame(): JSX.Element {
       <Button
         onClick={() => {
           tableCalculations.setCell(0, 0, CellState.FILLED);
+          tableCalculations.setCell(1, 1, CellState.EMPTY);
         }}
       >
         Fill
@@ -72,12 +101,12 @@ export default function TableGame(): JSX.Element {
       <Table>
         <TableBody>
           <TableRow>
-            <HeaderCell
+            <BorderCell
               rowSpan={tableCalculations.maxColLength}
               colSpan={tableCalculations.maxRowLength}
             >
               &nbsp;
-            </HeaderCell>
+            </BorderCell>
             {tableCalculations.colGroupValueCells[0].map((cell) =>
               cell != null ? (
                 <HeaderCell>{cell}</HeaderCell>
@@ -104,9 +133,16 @@ export default function TableGame(): JSX.Element {
                   <HeaderCell key={index}>{cell ?? <>&nbsp;</>}</HeaderCell>
                 ),
               )}
-              {cells.map((_, index) => (
-                <NormalCell key={index}>&nbsp;</NormalCell>
-              ))}
+              {cells.map((cell, index) => {
+                switch (cell) {
+                  case CellState.EMPTY:
+                    return <CrossedCell>&nbsp;</CrossedCell>;
+                  case CellState.FILLED:
+                    return <FilledCell>&nbsp;</FilledCell>;
+                  default:
+                    return <EmptyCell>&nbsp;</EmptyCell>;
+                }
+              })}
             </TableRow>
           ))}
         </TableBody>
