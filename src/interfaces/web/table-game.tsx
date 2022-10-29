@@ -12,9 +12,19 @@ const HeaderCell = styled(MuiTableCell)`
   border-style: solid;
   border-color: black;
   border-width: 1px;
-  height: 1em;
-  width: 1em;
+  padding: 0;
+  height: 2rem;
+  width: 2rem;
+
   text-align: center;
+`;
+
+const NewDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  width: 2rem;
 `;
 
 const BorderCell = styled(HeaderCell)`
@@ -56,19 +66,29 @@ export default function TableGame(): JSX.Element {
         ).concat(table.rowValues[i]),
     );
 
+    const width = maxRowLength + table.columnValues.length;
+    const heigth = maxColLength + table.rowValues.length;
+
     return {
       ...table,
       colGroupValueCells,
       rowGroupValueCells,
       maxColLength,
       maxRowLength,
+      width,
+      heigth,
     };
   }, [table]);
 
   return tableCalculations != null ? (
     <div>
       <Button onClick={() => setTable(undefined)}>Back</Button>
-      <Table style={{ height: '1px' }}>
+      <Table
+        style={{
+          height: `${tableCalculations.heigth}rem`,
+          width: `${tableCalculations.width}rem`,
+        }}
+      >
         <TableBody>
           <TableRow>
             <BorderCell
@@ -77,30 +97,28 @@ export default function TableGame(): JSX.Element {
             >
               &nbsp;
             </BorderCell>
-            {tableCalculations.colGroupValueCells[0].map((cell) =>
-              cell != null ? (
-                <HeaderCell>{cell}</HeaderCell>
-              ) : (
-                <HeaderCell>&nbsp;</HeaderCell>
-              ),
-            )}
+            {tableCalculations.colGroupValueCells[0].map((cell, key) => (
+              <HeaderCell key={key}>
+                <NewDiv>{cell ?? <>&nbsp;</>}</NewDiv>
+              </HeaderCell>
+            ))}
           </TableRow>
           {tableCalculations.colGroupValueCells.slice(1).map((cells, index) => (
             <TableRow key={index}>
-              {cells.map((cell) =>
-                cell != null ? (
-                  <HeaderCell>{cell}</HeaderCell>
-                ) : (
-                  <HeaderCell>&nbsp;</HeaderCell>
-                ),
-              )}
+              {cells.map((cell, key) => (
+                <HeaderCell key={key}>
+                  <NewDiv>{cell ?? <>&nbsp;</>}</NewDiv>
+                </HeaderCell>
+              ))}
             </TableRow>
           ))}
           {tableCalculations.state.map((cells, rowIndex) => (
             <TableRow key={rowIndex}>
               {tableCalculations.rowGroupValueCells[rowIndex].map(
                 (cell, index) => (
-                  <HeaderCell key={index}>{cell ?? <>&nbsp;</>}</HeaderCell>
+                  <HeaderCell key={index}>
+                    <NewDiv>{cell ?? <>&nbsp;</>}</NewDiv>
+                  </HeaderCell>
                 ),
               )}
               {cells.map((cell, colIndex) => (

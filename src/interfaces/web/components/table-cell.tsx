@@ -8,14 +8,26 @@ const EmptyCell = styled(MuiTableCell)`
   border-width: 1px;
   border-color: black;
   padding: 0;
-  height: 1em;
-  width: 1em;
+
+  height: 2rem;
+  width: 2rem;
+`;
+
+const ButtonWrapper = styled.div`
+  height: 2rem;
+  width: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
 `;
 
 const ToggleButton = styled(Button)`
-  width: 100%;
-  height: 100%;
   border-radius: 0;
+  padding: 0;
+  min-width: 0;
+  height: 2rem;
+  width: 2rem;
 
   &:hover {
     background-color: #f3f3f3;
@@ -43,6 +55,7 @@ const CrossedButton = styled(ToggleButton)`
       black,
       transparent calc(50% + 1px)
     );
+
   &:hover {
     background-image: linear-gradient(
         to left bottom,
@@ -87,9 +100,11 @@ export default function TableCell({
   const buttonData = stateToCellMap[cell];
   return (
     <EmptyCell>
-      <buttonData.component onClick={() => onChange(buttonData.nextState)}>
-        &nbsp;
-      </buttonData.component>
+      <ButtonWrapper>
+        <buttonData.component onClick={() => onChange(buttonData.nextState)}>
+          &nbsp;
+        </buttonData.component>
+      </ButtonWrapper>
     </EmptyCell>
   );
 }
