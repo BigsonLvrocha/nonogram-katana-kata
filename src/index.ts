@@ -1,8 +1,8 @@
 import { createInterface } from 'readline';
 import { tables } from './contants/table-definitions';
-import { ConsoleGame } from './components/console-game/console-game';
-import { ConsoleMenu } from './components/console-menu/console-menu';
-import { ConsolePrompter } from './components/console-menu/console-prompter';
+import { ConsoleGame } from './interfaces/console/console-game';
+import { ConsoleMenu } from './interfaces/console/components/console-menu/console-menu';
+import { ConsolePrompter } from './interfaces/console/components/console-menu/console-prompter';
 
 const inter = createInterface({
   input: process.stdin,

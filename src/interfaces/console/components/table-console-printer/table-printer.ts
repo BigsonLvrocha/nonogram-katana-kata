@@ -1,12 +1,12 @@
-import { CellState } from '../../contants/cell-state-enum';
-import { Table } from '../table/table';
+import { CellState } from '../../../../contants/cell-state-enum';
+import { Table } from '../../../../components/table/table';
 import {
   buildFullCell,
   buildNumberCell,
   buildXCell,
   DrawableCell,
 } from './drawable-cell';
-import { buildArray } from '../../services/array';
+import { buildArray } from '../../../../services/array';
 
 const blankCell = buildFullCell(' ');
 

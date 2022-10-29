@@ -2,8 +2,11 @@ import {
   TableDefinition,
   TableDefinitions,
 } from '../../contants/table-definitions';
-import { ConsoleMenu, MenuEntryDefinition } from '../console-menu/console-menu';
-import { Prompter } from '../console-menu/prompter';
+import {
+  ConsoleMenu,
+  MenuEntryDefinition,
+} from '../../interfaces/console/components/console-menu/console-menu';
+import { Prompter } from '../../interfaces/console/components/console-menu/prompter';
 import { TableGame } from './table-game';
 
 interface ConsoleGameDependencies {

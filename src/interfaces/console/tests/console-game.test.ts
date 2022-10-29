@@ -2,10 +2,10 @@ import { expect, describe, it, jest, beforeAll } from '@jest/globals';
 import { Mock } from 'jest-mock';
 import { tables } from '../../../contants/table-definitions';
 import { ConsoleGame } from '../console-game';
-import { Prompter } from '../../console-menu/prompter';
-import { ConsoleMenu } from '../../console-menu/console-menu';
-import { Table } from '../../table/table';
-import { table2String } from '../../table-console-printer/table-printer';
+import { Prompter } from '../../../interfaces/console/components/console-menu/prompter';
+import { ConsoleMenu } from '../../../interfaces/console/components/console-menu/console-menu';
+import { Table } from '../../../components/table/table';
+import { table2String } from '../components/table-console-printer/table-printer';
 // import { CellState } from '../../../contants/cell-state-enum';
 
 describe('Console Game', () => {

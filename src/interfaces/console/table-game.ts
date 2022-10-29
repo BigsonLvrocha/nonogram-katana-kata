@@ -1,8 +1,8 @@
-import { Table } from '../table/table';
-import { table2String } from '../table-console-printer/table-printer';
+import { Table } from '../../components/table/table';
+import { table2String } from './components/table-console-printer/table-printer';
 import { CellState } from '../../contants/cell-state-enum';
-import { ConsoleMenu } from '../console-menu/console-menu';
-import { Prompter } from '../console-menu/prompter';
+import { ConsoleMenu } from '../../interfaces/console/components/console-menu/console-menu';
+import { Prompter } from '../../interfaces/console/components/console-menu/prompter';
 
 interface TableGameDependencies {
   log: (text: string) => void;
