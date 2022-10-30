@@ -117,6 +117,7 @@ export default function TableGame(): JSX.Element {
                   onChange={(newState) =>
                     tableCalculations.setCell(rowIndex, colIndex, newState)
                   }
+                  disabled={tableCalculations.finished}
                 />
               ))}
             </TableRow>

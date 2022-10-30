@@ -68,6 +68,7 @@ const CrossedButton = styled(ToggleButton)`
 interface TableCellProps {
   onChange: (state: CellState) => void;
   cell: CellState;
+  disabled?: boolean;
 }
 
 const stateToCellMap = {
@@ -88,12 +89,16 @@ const stateToCellMap = {
 export default function TableCell({
   cell,
   onChange,
+  disabled = false,
 }: TableCellProps): JSX.Element {
   const buttonData = stateToCellMap[cell];
   return (
     <EmptyCell>
       <CellContentWrapper>
-        <buttonData.component onClick={() => onChange(buttonData.nextState)}>
+        <buttonData.component
+          onClick={() => onChange(buttonData.nextState)}
+          disabled={disabled}
+        >
           &nbsp;
         </buttonData.component>
       </CellContentWrapper>
