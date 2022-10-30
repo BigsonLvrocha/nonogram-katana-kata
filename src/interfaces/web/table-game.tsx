@@ -115,7 +115,7 @@ export default function TableGame(): JSX.Element {
                   key={colIndex}
                   cell={cell}
                   onChange={(newState) =>
-                    table?.setCell(rowIndex, colIndex, newState)
+                    tableCalculations.setCell(rowIndex, colIndex, newState)
                   }
                 />
               ))}
