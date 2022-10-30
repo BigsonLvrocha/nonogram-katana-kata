@@ -73,6 +73,7 @@ interface TableContextType {
     selectedCell: [number, number] | undefined;
     setCell: (row: number, col: number, state: CellState) => void;
     resetTable: () => void;
+    finished: boolean;
   };
   setTable: (table: Table | undefined) => void;
 }
@@ -105,6 +106,7 @@ export default function TableProvider({
                 resetTable: () => dispatch(tableActions.resetTable()),
                 setCell: (row, col, state) =>
                   dispatch(tableActions.setCell(row, col, state)),
+                finished: tableState.table.finished,
               }
             : undefined,
       }}
