@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import MuiTableCell from '@mui/material/TableCell';
 import { useTableGame } from './table-provider';
 import TableCell from './components/table-cell';
+import HeaderCellLine from './components/header-cell-line';
 
 const HeaderCell = styled(MuiTableCell)`
   border-style: solid;
@@ -19,15 +20,15 @@ const HeaderCell = styled(MuiTableCell)`
   text-align: center;
 `;
 
-const NewDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const BorderCell = styled(HeaderCell)`
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  padding: 0;
   height: 2rem;
   width: 2rem;
-`;
 
-const BorderCell = styled(HeaderCell)`
+  text-align: center;
   background-image: linear-gradient(
     to left bottom,
     transparent calc(50% - 1px),
@@ -97,30 +98,18 @@ export default function TableGame(): JSX.Element {
             >
               &nbsp;
             </BorderCell>
-            {tableCalculations.colGroupValueCells[0].map((cell, key) => (
-              <HeaderCell key={key}>
-                <NewDiv>{cell ?? <>&nbsp;</>}</NewDiv>
-              </HeaderCell>
-            ))}
+            <HeaderCellLine cells={tableCalculations.colGroupValueCells[0]} />
           </TableRow>
           {tableCalculations.colGroupValueCells.slice(1).map((cells, index) => (
             <TableRow key={index}>
-              {cells.map((cell, key) => (
-                <HeaderCell key={key}>
-                  <NewDiv>{cell ?? <>&nbsp;</>}</NewDiv>
-                </HeaderCell>
-              ))}
+              <HeaderCellLine cells={cells} />
             </TableRow>
           ))}
           {tableCalculations.state.map((cells, rowIndex) => (
             <TableRow key={rowIndex}>
-              {tableCalculations.rowGroupValueCells[rowIndex].map(
-                (cell, index) => (
-                  <HeaderCell key={index}>
-                    <NewDiv>{cell ?? <>&nbsp;</>}</NewDiv>
-                  </HeaderCell>
-                ),
-              )}
+              <HeaderCellLine
+                cells={tableCalculations.rowGroupValueCells[rowIndex]}
+              />
               {cells.map((cell, colIndex) => (
                 <TableCell
                   key={colIndex}

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import MuiTableCell from '@mui/material/TableCell';
 import Button from '@mui/material/Button';
+import CellContentWrapper from './cell-content-wrapper';
 import { CellState } from '../../../contants/cell-state-enum';
 
 const EmptyCell = styled(MuiTableCell)`
@@ -11,15 +12,6 @@ const EmptyCell = styled(MuiTableCell)`
 
   height: 2rem;
   width: 2rem;
-`;
-
-const ButtonWrapper = styled.div`
-  height: 2rem;
-  width: 2rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
 `;
 
 const ToggleButton = styled(Button)`
@@ -100,11 +92,11 @@ export default function TableCell({
   const buttonData = stateToCellMap[cell];
   return (
     <EmptyCell>
-      <ButtonWrapper>
+      <CellContentWrapper>
         <buttonData.component onClick={() => onChange(buttonData.nextState)}>
           &nbsp;
         </buttonData.component>
-      </ButtonWrapper>
+      </CellContentWrapper>
     </EmptyCell>
   );
 }
