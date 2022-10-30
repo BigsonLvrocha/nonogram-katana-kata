@@ -8,6 +8,7 @@ import MuiTableCell from '@mui/material/TableCell';
 import { useTableGame } from './table-provider';
 import TableCell from './components/table-cell';
 import HeaderCellLine from './components/header-cell-line';
+import { Typography } from '@mui/material';
 
 const HeaderCell = styled(MuiTableCell)`
   border-style: solid;
@@ -124,6 +125,9 @@ export default function TableGame(): JSX.Element {
           ))}
         </TableBody>
       </Table>
+      {tableCalculations.finished ? (
+        <Typography variant="h3">Congratulations!</Typography>
+      ) : null}
     </div>
   ) : (
     <div>Error, no table to show</div>
