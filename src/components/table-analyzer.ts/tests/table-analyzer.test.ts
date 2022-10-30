@@ -1,5 +1,5 @@
 import { expect, it, describe } from '@jest/globals';
-import { Table } from '../table';
+import { Table } from '../../table/table';
 import { dataset } from './fixtures/table-analyzer.fixtures';
 import { analyzeTable, LineValueState } from '../table-analyzer';
 
