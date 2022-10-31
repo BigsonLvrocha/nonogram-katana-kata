@@ -1,5 +1,5 @@
 import { createInterface } from 'readline';
-import { tables } from './contants/table-definitions';
+import { tables } from './constants/table-definitions';
 import { ConsoleGame } from './interfaces/console/console-game';
 import { ConsoleMenu } from './interfaces/console/components/console-menu/console-menu';
 import { ConsolePrompter } from './interfaces/console/components/console-menu/console-prompter';

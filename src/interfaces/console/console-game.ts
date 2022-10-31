@@ -1,7 +1,7 @@
 import {
   TableDefinition,
   TableDefinitions,
-} from '../../contants/table-definitions';
+} from '../../constants/table-definitions';
 import {
   ConsoleMenu,
   MenuEntryDefinition,

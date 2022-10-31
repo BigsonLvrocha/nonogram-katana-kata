@@ -1,8 +1,8 @@
-import { CellState } from '../../../../contants/cell-state-enum';
+import { CellState } from '../../../../constants/cell-state-enum';
 import {
   tables,
   TableDefinition,
-} from '../../../../contants/table-definitions';
+} from '../../../../constants/table-definitions';
 
 interface TableFinishedCase {
   state: CellState[][];

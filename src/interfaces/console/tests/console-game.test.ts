@@ -1,6 +1,6 @@
 import { expect, describe, it, jest, beforeAll } from '@jest/globals';
 import { Mock } from 'jest-mock';
-import { tables } from '../../../contants/table-definitions';
+import { tables } from '../../../constants/table-definitions';
 import { ConsoleGame } from '../console-game';
 import { Prompter } from '../../../interfaces/console/components/console-menu/prompter';
 import { ConsoleMenu } from '../../../interfaces/console/components/console-menu/console-menu';

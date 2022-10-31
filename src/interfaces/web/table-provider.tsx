@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useReducer, useContext } from 'react';
 import { Table } from '../../components/table/table';
-import { CellState } from '../../contants/cell-state-enum';
+import { CellState } from '../../constants/cell-state-enum';
 
 const enum TableActions {
   SET_TABLE = 'SET_TABLE',

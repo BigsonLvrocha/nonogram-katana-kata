@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach } from '@jest/globals';
-import { CellState } from '../../../contants/cell-state-enum';
+import { CellState } from '../../../constants/cell-state-enum';
 import { Table } from '../table';
 
 describe('table', () => {

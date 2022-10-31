@@ -3,7 +3,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { useContext } from 'react';
 import { tableContext } from './table-provider';
-import { tables } from '../../contants/table-definitions';
+import { tables } from '../../constants/table-definitions';
 import { Table } from '../../components/table/table';
 
 export function TableSelection(): JSX.Element {

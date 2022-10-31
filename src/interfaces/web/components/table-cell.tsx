@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import MuiTableCell from '@mui/material/TableCell';
 import Button from '@mui/material/Button';
 import CellContentWrapper from './cell-content-wrapper';
-import { CellState } from '../../../contants/cell-state-enum';
+import { CellState } from '../../../constants/cell-state-enum';
 
 const EmptyCell = styled(MuiTableCell)`
   border-style: solid;

@@ -1,4 +1,4 @@
-import { CellState } from '../../contants/cell-state-enum';
+import { CellState } from '../../constants/cell-state-enum';
 
 export function isTableFinished(
   state: CellState[][],

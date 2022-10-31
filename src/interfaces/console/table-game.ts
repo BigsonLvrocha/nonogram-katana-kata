@@ -1,6 +1,6 @@
 import { Table } from '../../components/table/table';
 import { table2String } from './components/table-console-printer/table-printer';
-import { CellState } from '../../contants/cell-state-enum';
+import { CellState } from '../../constants/cell-state-enum';
 import { ConsoleMenu } from '../../interfaces/console/components/console-menu/console-menu';
 import { Prompter } from '../../interfaces/console/components/console-menu/prompter';
 
