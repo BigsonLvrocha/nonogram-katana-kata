@@ -19,13 +19,13 @@ describe('line-analyzer', () => {
       });
 
       data.answer.valid.forEach((valid, index) => {
-        it('results with the right valid', () => {
+        it(`results with the right valid for index ${index}`, () => {
           expect(result.valid[index]).toEqual(valid);
         });
       });
 
       data.answer.cells.forEach((cells, index) => {
-        it('results with the correct options', () => {
+        it(`results with the correct value group candidates for index ${index}`, () => {
           expect(result.cellIndexes[index]).toEqual(cells);
         });
       });
