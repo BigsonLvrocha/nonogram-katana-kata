@@ -1,5 +1,6 @@
 import { CellState } from '../../../../constants/cell-state-enum';
-import { LineValueState, TableAnalysis } from '../../table-analyzer';
+import { LineValueState } from '../../line-analyzer';
+import { TableAnalysis } from '../../table-analyzer';
 
 interface TableValuesDefinition {
   columns: number[][];

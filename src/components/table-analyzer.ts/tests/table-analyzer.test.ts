@@ -1,7 +1,8 @@
 import { expect, it, describe } from '@jest/globals';
 import { Table } from '../../table/table';
 import { dataset } from './fixtures/table-analyzer.fixtures';
-import { analyzeTable, LineValueState } from '../table-analyzer';
+import { analyzeTable } from '../table-analyzer';
+import { LineValueState } from '../line-analyzer';
 
 describe('table analyzer', () => {
   describe('empty table', () => {

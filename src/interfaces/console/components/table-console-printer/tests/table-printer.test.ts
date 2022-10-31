@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
-import { CellState } from '../../../contants/cell-state-enum';
-import { Table } from '../../table/table';
+import { CellState } from '../../../../../constants/cell-state-enum';
+import { Table } from '../../../../../components/table/table';
 import { table2String } from '../table-printer';
 import {
   empty5x5,
