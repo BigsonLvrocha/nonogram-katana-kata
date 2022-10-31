@@ -109,4 +109,21 @@ export const dataset: Dataset = {
       ],
     },
   },
+  'Empty case [1,3]': {
+    line: {
+      valueGroupsValues: [1, 3],
+      cells: [u, u, u, u, u],
+    },
+    answer: {
+      cells: [
+        new Set([0]),
+        new Set([]),
+        new Set([1]),
+        new Set([1]),
+        new Set([1]),
+      ],
+      valid: [true, true, true, true, true],
+      valueGroupsState: [LineValueState.EMPTY, LineValueState.EMPTY],
+    },
+  },
 };
