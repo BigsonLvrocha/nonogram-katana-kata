@@ -88,4 +88,25 @@ export const dataset: Dataset = {
       valueGroupsState: [LineValueState.EMPTY, LineValueState.EMPTY],
     },
   },
+  'Empty case [1,1,1]': {
+    line: {
+      valueGroupsValues: [1, 1, 1],
+      cells: [u, u, u, u, u],
+    },
+    answer: {
+      cells: [
+        new Set([0]),
+        new Set([]),
+        new Set([1]),
+        new Set([]),
+        new Set([2]),
+      ],
+      valid: [true, true, true, true, true],
+      valueGroupsState: [
+        LineValueState.EMPTY,
+        LineValueState.EMPTY,
+        LineValueState.EMPTY,
+      ],
+    },
+  },
 };
