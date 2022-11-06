@@ -14,30 +14,15 @@ export function analizeLine(
   cellIndexes: Array<Set<number>>;
   valid: boolean[];
 } {
-  const cellValueGroupIndexCandidates = Array.from(
+  let valueGroupIndexCandidates = Array.from(
     { length: cellLine.length },
     () => new Set<number>(),
   );
+
   const startingIndexes = Array.from(
     { length: valueGroupValues.length },
     () => 0,
   );
-
-  const registerCellIndexes = (valueGroupStartCellIndexes: number[]): void => {
-    for (const [
-      valueGroupIndex,
-      valueGroupStartCellIndex,
-    ] of valueGroupStartCellIndexes.entries()) {
-      for (
-        let cellIndex = valueGroupStartCellIndex;
-        cellIndex <
-        valueGroupStartCellIndex + valueGroupValues[valueGroupIndex];
-        cellIndex += 1
-      ) {
-        cellValueGroupIndexCandidates[cellIndex].add(valueGroupIndex);
-      }
-    }
-  };
 
   const iterateIndexes = (
     valueGroupStartCellIndexes: number[],
@@ -68,7 +53,11 @@ export function analizeLine(
           1;
         iterateIndexes(state, currValueGroupIndex + 1);
       } else {
-        registerCellIndexes(state);
+        valueGroupIndexCandidates = registerCellIndexesImutable(
+          state,
+          valueGroupIndexCandidates,
+          valueGroupValues,
+        );
       }
     }
   };
@@ -77,7 +66,30 @@ export function analizeLine(
 
   return {
     valuesState: valueGroupValues.map(() => LineValueState.EMPTY),
-    cellIndexes: cellValueGroupIndexCandidates,
+    cellIndexes: valueGroupIndexCandidates,
     valid: cellLine.map(() => true),
   };
+}
+
+function registerCellIndexesImutable(
+  valueGroupStartingCellIndexes: number[],
+  cellValueGroupIndexCandidates: Array<Set<number>>,
+  valueGroupValues: number[],
+): Array<Set<number>> {
+  return valueGroupStartingCellIndexes.reduce(
+    (acc, valueGroupStart, valueGroupIndex) => {
+      const valueGroupValue = valueGroupValues[valueGroupIndex];
+
+      const cellIndexToRegister = Array.from(
+        { length: valueGroupValue },
+        (_i, i) => i + valueGroupStart,
+      );
+
+      return cellIndexToRegister.reduce((acc2, cellIndexToRegister) => {
+        acc2[cellIndexToRegister].add(valueGroupIndex);
+        return acc2;
+      }, acc);
+    },
+    cellValueGroupIndexCandidates,
+  );
 }
